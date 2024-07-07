@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
+.prose {
+	code::before {
+		display: none;
+	}
+	code::after {
+		display: none;
+	}
+
+	code {
+		font-family: 'Fira Code', monospace;
+		@apply rounded bg-gray-50 p-[2px] px-[3px];
+	}
+
+	pre code {
+		background-color: transparent;
+		padding: 0px;
+	}
+}
