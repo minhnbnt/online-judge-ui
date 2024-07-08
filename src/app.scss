@@ -20,7 +20,6 @@ body {
 	}
 
 	pre code {
-		background-color: transparent;
-		padding: 0px;
+		@apply bg-transparent p-0;
 	}
 }
