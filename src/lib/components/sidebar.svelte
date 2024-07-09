@@ -1,13 +1,15 @@
 <script>
 	import { ChartBar, ClipboardDocumentCheck, DocumentDuplicate, Icon } from 'svelte-hero-icons';
+	import { userInfo } from '$lib/stores/userInfo';
+
+	import { PUBLIC_LOGO_SRC } from '$env/static/public';
 
 	const HOME_PAGE = 'https://svelte.dev/';
-	const LOGO = 'https://upload.wikimedia.org/wikipedia/commons/1/1b/Svelte_Logo.svg';
 
 	const avatar =
 		'https://cdn-icpc.ptit.edu.vn/ptitcode/profile/um4ZEmt54c1gAfO0m1wwQ7YxGbNZPOseEKs7Cvn8.png';
 
-	const username = 'm1nhnbnt';
+	$: username = $userInfo?.username;
 
 	const LINKS = [
 		{
@@ -32,7 +34,7 @@
 	<div class="relative h-full">
 		<a href={HOME_PAGE} class="sidebar-link">
 			<div class="flex items-center p-2">
-				<img src={LOGO} alt="Svelte" class="h-9" />
+				<img src={PUBLIC_LOGO_SRC} alt="Svelte" class="h-9" />
 				<p class="ms-3 text-xl font-semibold">Online Judge</p>
 			</div>
 		</a>
@@ -49,9 +51,11 @@
 		</div>
 
 		<div class="absolute bottom-0 mt-3 w-full border-t pt-3">
-			<div class="sidebar-link w-full max-w-full items-center p-2 text-lg">
-				<img src={avatar} alt={username} class="h-11 rounded-full" />
-				<p class="ms-3 truncate">{username}</p>
+			<div class="sidebar-link w-full max-w-full select-none items-center p-2 text-lg">
+				{#if username !== undefined}
+					<img src={avatar} alt={username} class="h-11 rounded-full" />
+					<p class="ms-3 truncate">{username}</p>
+				{/if}
 			</div>
 		</div>
 	</div>

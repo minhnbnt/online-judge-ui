@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { API_BASE_URL } from '$lib/config';
+import { PUBLIC_API_BASE_URL } from '$env/static/public';
 
 const instance = axios.create({
-	baseURL: API_BASE_URL
+	baseURL: PUBLIC_API_BASE_URL
 });
 
 export default instance;

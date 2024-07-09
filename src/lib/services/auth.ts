@@ -25,12 +25,12 @@ const defaultCookieOptions = {
 	secure: true
 };
 
-export const accessToken = writable<string | null>(null);
+export const accessTokenStore = writable<string | undefined>();
 
 function accessTokenIsValid() {
-	const token = get(accessToken);
+	const token = get(accessTokenStore);
 
-	if (token === null) {
+	if (token === undefined) {
 		return false;
 	}
 
@@ -42,7 +42,7 @@ function accessTokenIsValid() {
 
 export function handleLoggedin({ access, refresh }: TokenResponse) {
 	Cookies.set(JWT_REFRESH_COOKIE_KEY, refresh, defaultCookieOptions);
-	accessToken.set(access);
+	accessTokenStore.set(access);
 }
 
 export async function isAuthorized(): Promise<boolean> {
@@ -59,7 +59,7 @@ export async function isAuthorized(): Promise<boolean> {
 		const response = await instance.post('/token/refresh/', { refresh });
 		const { access } = response.data;
 
-		accessToken.set(access);
+		accessTokenStore.set(access);
 
 		return true;
 	} catch (err) {
@@ -68,6 +68,6 @@ export async function isAuthorized(): Promise<boolean> {
 	}
 }
 
-export async function getAccessToken(): Promise<string | null> {
-	return (await isAuthorized()) ? get(accessToken) : null;
+export async function getAccessToken(): Promise<string | undefined> {
+	return (await isAuthorized()) ? get(accessTokenStore) : undefined;
 }

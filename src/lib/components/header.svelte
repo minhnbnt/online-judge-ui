@@ -1,6 +1,7 @@
 <script>
+	import { PUBLIC_LOGO_SRC } from '$env/static/public';
+
 	const HOME_PAGE = 'https://svelte.dev/';
-	const LOGO = 'https://upload.wikimedia.org/wikipedia/commons/1/1b/Svelte_Logo.svg';
 </script>
 
 <nav class="sticky top-0 z-50 items-center bg-red-50 shadow-red-50">
@@ -8,7 +9,7 @@
 		<!-- Icon -->
 		<div>
 			<a href={HOME_PAGE}>
-				<img class="h-9" src={LOGO} alt="Svelte" />
+				<img class="h-9" src={PUBLIC_LOGO_SRC} alt="Svelte" />
 			</a>
 		</div>
 
