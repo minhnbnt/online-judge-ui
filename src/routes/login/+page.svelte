@@ -1,14 +1,46 @@
 <script lang="ts">
-	import instance from '$lib/services/api';
 	import type { AxiosError } from 'axios';
 
+	import instance from '$lib/services/api';
 	import { goto } from '$app/navigation';
 	import { handleLoggedin } from '$lib/services/auth';
 
-	const LOGO_SRC = 'https://raw.githubusercontent.com/sveltejs/branding/master/svelte-logo.svg';
+	import { PUBLIC_LOGO_SRC } from '$env/static/public';
+
+	interface BadRequestResponse {
+		username?: Array<string>;
+		password?: Array<string>;
+	}
+
+	let showNotMatch = false;
+
+	let usernameError: string | undefined;
+	let passwordError: string | undefined;
 
 	function onErr(err: AxiosError) {
-		// TODO: validate and handle login error
+		const response = err.response;
+
+		if (response === undefined) {
+			throw err;
+		}
+
+		const { status, data } = response;
+		if (status === 401) {
+			showNotMatch = true;
+			setTimeout(() => (showNotMatch = false), 3000);
+			return;
+		}
+
+		const { username, password } = data as BadRequestResponse;
+		if (username) {
+			usernameError = username.map((err, i) => `${i + 1}. ${err}`).join('\n');
+			setTimeout(() => (usernameError = undefined), 3000);
+		}
+
+		if (password) {
+			passwordError = password?.map((err, i) => `${i + 1}. ${err}`).join('\n');
+			setTimeout(() => (passwordError = undefined), 3000);
+		}
 	}
 
 	async function handleSubmit(event: SubmitEvent) {
@@ -24,7 +56,6 @@
 		}
 
 		handleLoggedin(response.data);
-
 		goto('/problems');
 	}
 </script>
@@ -32,13 +63,19 @@
 <main class="flex h-screen max-h-screen items-center justify-center bg-gray-50">
 	<div class="m-10 flex rounded-xl border bg-white p-8 shadow">
 		<div class="mr-8 space-y-2 border-r pr-8">
-			<img src={LOGO_SRC} class="h-20" alt="Svelte" />
+			<img src={PUBLIC_LOGO_SRC} class="h-20" alt="Svelte" />
 			<h1 class="text-2xl font-bold">Login</h1>
 			<p>Sign in to your account</p>
 		</div>
 		<form class="my-3 flex flex-col space-y-4" on:submit|preventDefault={handleSubmit}>
 			<input type="text" class="input" placeholder="Username" name="username" />
+			{#if usernameError !== undefined}
+				<p>{usernameError}</p>
+			{/if}
 			<input type="password" placeholder="Password" class="input" name="password" />
+			{#if passwordError !== undefined}
+				<p>{passwordError}</p>
+			{/if}
 			<label>
 				<input
 					type="checkbox"
@@ -47,6 +84,9 @@
 				/>
 				Remember me
 			</label>
+
+			<p>{showNotMatch ? 'Username or password does not match' : ''}</p>
+
 			<div class="ml-auto">
 				<button type="submit">Login</button>
 			</div>
