@@ -6,7 +6,8 @@
 
 	const avatar =
 		'https://cdn-icpc.ptit.edu.vn/ptitcode/profile/um4ZEmt54c1gAfO0m1wwQ7YxGbNZPOseEKs7Cvn8.png';
-	const name = 'minhnbntaaaaaaaaaaaaaaaaaaaaaaaaa';
+
+	const username = 'm1nhnbnt';
 
 	const LINKS = [
 		{
@@ -49,8 +50,8 @@
 
 		<div class="absolute bottom-0 mt-3 w-full border-t pt-3">
 			<div class="sidebar-link w-full max-w-full items-center p-2 text-lg">
-				<img src={avatar} alt={name} class="h-11 rounded-full" />
-				<p class="ms-3 truncate">{name}</p>
+				<img src={avatar} alt={username} class="h-11 rounded-full" />
+				<p class="ms-3 truncate">{username}</p>
 			</div>
 		</div>
 	</div>

@@ -21,7 +21,7 @@
 
 		<tbody>
 			{#each problems as { id, title, level }, index}
-				<tr class="border-t odd:bg-white even:bg-gray-50 hover:bg-blue-50 select-none">
+				<tr class="select-none border-t odd:bg-white even:bg-gray-50 hover:bg-blue-50">
 					<td class="cell text-center">{index + 1}</td>
 					<td class="cell text-center">{id}</td>
 					<td class="cell">

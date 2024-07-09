@@ -1,4 +1,6 @@
 import type { PageLoad } from './$types';
+import { error } from '@sveltejs/kit';
+
 import instance from '$lib/services/api';
 
 export const ssr = false;
@@ -8,6 +10,7 @@ export const load: PageLoad = async ({ params }) => {
 		const response = await instance.get(`problems/${params.id}`);
 		return response.data;
 	} catch (err) {
-		console.log(err);
+		console.error(err);
+		error(err.response.status);
 	}
 };
