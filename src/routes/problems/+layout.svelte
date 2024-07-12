@@ -1,5 +1,5 @@
 <script>
-	import Sidebar from '$lib/components/sidebar.svelte';
+	import Sidebar from '$lib/components/sidebar/main.svelte';
 </script>
 
 <div class="flex max-h-screen bg-gray-50">

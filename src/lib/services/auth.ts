@@ -45,6 +45,11 @@ export function handleLoggedin({ access, refresh }: TokenResponse) {
 	accessTokenStore.set(access);
 }
 
+export function handleLoggedOut() {
+	Cookies.remove(JWT_REFRESH_COOKIE_KEY, defaultCookieOptions);
+	accessTokenStore.set(undefined);
+}
+
 export async function isAuthorized(): Promise<boolean> {
 	if (accessTokenIsValid()) {
 		return true;
