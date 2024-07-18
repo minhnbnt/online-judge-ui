@@ -1,0 +1,15 @@
+.codemirror-wrapper {
+	@apply h-full w-full text-sm;
+}
+
+.cm-editor {
+	@apply h-full;
+}
+
+.cm-lineNumbers .cm-gutterElement {
+	@apply !pl-[20px];
+}
+
+.cm-content {
+	@apply !py-[9px];
+}
