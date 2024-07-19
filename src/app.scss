@@ -23,3 +23,30 @@ body {
 		@apply bg-transparent p-0;
 	}
 }
+
+.toasts {
+	.toast {
+		margin: 15px !important;
+		min-width: fit-content !important;
+		@apply overflow-hidden rounded-[7px] shadow;
+	}
+
+	.progress {
+		height: 4px !important;
+		animation-name: shink !important;
+	}
+
+	.content {
+		padding: 7px !important;
+		padding-left: 13px !important;
+	}
+
+	@keyframes shink {
+		0% {
+			width: 100%;
+		}
+		100% {
+			width: 0;
+		}
+	}
+}

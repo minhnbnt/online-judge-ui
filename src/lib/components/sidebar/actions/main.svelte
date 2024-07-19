@@ -13,7 +13,7 @@
 	let revealAction = false;
 </script>
 
-<div class="absolute bottom-0 mt-3 w-full border-t pt-3">
+<div class="absolute bottom-0 mt-3 w-full border-t bg-red-50 pt-3">
 	{#if username !== undefined}
 		{#if revealAction}
 			<Actions />

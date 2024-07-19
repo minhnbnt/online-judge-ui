@@ -1,41 +1,40 @@
 <script lang="ts">
 	import handleSubmit from './handleLogin';
 
-	import { PUBLIC_LOGO_SRC } from '$env/static/public';
+	import Logo from '$lib/assets/logo.svelte';
+	import { notifier } from '@beyonk/svelte-notifications';
 
 	interface BadRequestResponse {
 		username?: Array<string>;
 		password?: Array<string>;
 	}
 
-	let showNotMatch = false;
-
-	let usernameError: string | undefined;
-	let passwordError: string | undefined;
-
-	function errorFormat(messages: Array<string>) {
-		return messages.map((err, i) => `${i + 1}. ${err}`).join('\n');
-	}
+	let usernameError = false,
+		passwordError = false;
 
 	async function onSubmit(event: SubmitEvent) {
 		const errResponse = await handleSubmit(event.target as HTMLFormElement);
 		const { status, data } = errResponse!;
 
 		if (status === 401) {
-			showNotMatch = true;
-			setTimeout(() => (showNotMatch = false), 3000);
+			notifier.danger('Error: Username or password does not match.', 7000);
 			return;
 		}
 
 		const { username, password } = data as BadRequestResponse;
-		if (username) {
-			usernameError = errorFormat(username);
-			setTimeout(() => (usernameError = undefined), 3000);
-		}
 
 		if (password) {
-			passwordError = errorFormat(password);
-			setTimeout(() => (passwordError = undefined), 3000);
+			notifier.warning('Password error: ' + password.join('\n'), 7000);
+
+			passwordError = true;
+			setTimeout(() => (passwordError = false), 1000);
+		}
+
+		if (username) {
+			notifier.warning('Username error: ' + username.join('\n'), 7000);
+
+			usernameError = true;
+			setTimeout(() => (usernameError = false), 1000);
 		}
 	}
 </script>
@@ -43,22 +42,15 @@
 <main class="flex h-screen max-h-screen items-center justify-center bg-gray-50">
 	<div class="m-10 flex rounded-xl border bg-white p-8 shadow">
 		<div class="mr-8 space-y-2 border-r pr-8">
-			<img src={PUBLIC_LOGO_SRC} class="h-20" alt="Svelte" />
+			<div class="flex h-16 space-x-4">
+				<Logo />
+			</div>
 			<h1 class="text-2xl font-bold">Login</h1>
 			<p>Sign in to your account</p>
 		</div>
 		<form class="my-3 flex flex-col space-y-4" on:submit|preventDefault={onSubmit}>
 			<input type="text" class="input" placeholder="Username" name="username" />
-
-			{#if usernameError !== undefined}
-				<p>{usernameError}</p>
-			{/if}
-
 			<input type="password" placeholder="Password" class="input" name="password" />
-
-			{#if passwordError !== undefined}
-				<p>{passwordError}</p>
-			{/if}
 
 			<label>
 				<input
@@ -68,9 +60,6 @@
 				/>
 				Remember me
 			</label>
-
-			<p>{showNotMatch ? 'Username or password does not match' : ''}</p>
-
 			<div class="ml-auto">
 				<button type="submit">Login</button>
 			</div>

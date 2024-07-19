@@ -1,4 +1,5 @@
 <script>
+	import { NotificationDisplay } from '@beyonk/svelte-notifications';
 	import '../app.scss';
 </script>
 
@@ -10,12 +11,10 @@
 		rel="stylesheet"
 	/>
 
-	<link
-		rel="stylesheet"
-		href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css"
-		integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI"
-		crossorigin="anonymous"
-	/>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/firacode@6.2/distr/fira_code.min.css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" />
 </svelte:head>
+
+<NotificationDisplay />
 
 <slot />

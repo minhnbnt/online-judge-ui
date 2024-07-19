@@ -39,6 +39,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@beyonk/svelte-notifications": "^4.2.0",
 		"@cartamd/plugin-component": "^0.0.0",
 		"@cartamd/plugin-math": "^4.0.3",
 		"@codemirror/lang-cpp": "^6.0.2",

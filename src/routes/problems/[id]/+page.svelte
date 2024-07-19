@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Markdown } from 'carta-md';
 	import carta from '$lib/utils/markdown/config.js';
+	import Submit from '$lib/components/submit/main.svelte';
 
 	interface Problem {
 		id: string;
@@ -11,6 +12,10 @@
 
 	export let data: Problem;
 </script>
+
+<header class="sticky top-0 flex justify-end p-10 pb-0">
+	<Submit />
+</header>
 
 <svelte:head>
 	<title>{`${data.id} - ${data.title}`}</title>
