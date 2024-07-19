@@ -13,7 +13,7 @@
 	export let data: Problem;
 </script>
 
-<header class="sticky top-0 flex justify-end p-10 pb-0">
+<header class="sticky top-0 z-50 flex justify-end p-10 pb-0">
 	<Submit />
 </header>
 

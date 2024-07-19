@@ -1,7 +1,7 @@
 import { decodeJwt } from 'jose';
-import { derived } from 'svelte/store';
+import { derived, writable } from 'svelte/store';
 
-import { accessTokenStore } from '$lib/services/auth';
+export const accessTokenStore = writable<string | undefined>();
 
 interface UserInfo {
 	username: string;

@@ -1,6 +1,6 @@
 <script>
-	import { NotificationDisplay } from '@beyonk/svelte-notifications';
-	import '../app.scss';
+	import Notification from '$lib/layouts/notification/main.svelte';
+	import '../globals.scss';
 </script>
 
 <svelte:head>
@@ -15,6 +15,6 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" />
 </svelte:head>
 
-<NotificationDisplay />
-
-<slot />
+<Notification>
+	<slot />
+</Notification>

@@ -39,7 +39,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@beyonk/svelte-notifications": "^4.2.0",
 		"@cartamd/plugin-component": "^0.0.0",
 		"@cartamd/plugin-math": "^4.0.3",
 		"@codemirror/lang-cpp": "^6.0.2",
@@ -54,6 +53,7 @@
 		"jose": "^5.6.3",
 		"js-cookie": "^3.0.5",
 		"svelte-codemirror-editor": "^1.4.0",
-		"svelte-hero-icons": "^5.1.0"
+		"svelte-hero-icons": "^5.1.0",
+		"svelte-notifications": "github:louchebem06/svelte-notifications#fix-warn-vite-plugin-svelte"
 	}
 }

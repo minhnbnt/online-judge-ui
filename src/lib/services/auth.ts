@@ -1,8 +1,9 @@
-import { get, writable } from 'svelte/store';
+import { get } from 'svelte/store';
 import { decodeJwt } from 'jose';
 import Cookies from 'js-cookie';
 
 import instance from './api';
+import { accessTokenStore } from '$lib/stores/userInfo';
 
 const JWT_REFRESH_COOKIE_KEY = 'JWTRefreshToken';
 
@@ -24,8 +25,6 @@ interface TokenPayload {
 const defaultCookieOptions = {
 	secure: true
 };
-
-export const accessTokenStore = writable<string | undefined>();
 
 function accessTokenIsValid() {
 	const token = get(accessTokenStore);

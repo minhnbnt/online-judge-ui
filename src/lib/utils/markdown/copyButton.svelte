@@ -1,13 +1,23 @@
 <script lang="ts">
 	import { Icon, Clipboard } from 'svelte-hero-icons';
-	import { notifier } from '@beyonk/svelte-notifications';
 	import { fade } from 'svelte/transition';
+	import { get } from 'svelte/store';
+
+	import { notifyContextStore } from '$lib/stores/notification';
+
+	const { addNotification } = get(notifyContextStore);
 
 	export let handleClick: () => void;
 
 	function onClick() {
 		handleClick();
-		notifier.success('Text copied', 3000);
+
+		addNotification({
+			text: 'Copied',
+			type: 'success',
+			position: 'bottom-center',
+			removeAfter: 4000
+		});
 	}
 
 	const fadeConfig = {
