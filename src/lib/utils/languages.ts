@@ -10,9 +10,14 @@ export const languages = [
 	{ name: 'C++', compiler: 'g++' },
 	{ name: 'C#', compiler: 'c#.net' },
 	{ name: 'Java', compiler: 'java' },
+	{ name: 'Kotlin', compiler: 'kt' },
+	{ name: 'Scala 3', compiler: 'sc' },
+	{ name: 'Pascal', compiler: 'pas' },
+	{ name: 'Swift', compiler: 'swift' },
 	{ name: 'Go', compiler: 'go' },
 	{ name: 'Rust', compiler: 'rs' },
-	{ name: 'Python 3', compiler: 'py3' }
+	{ name: 'Python 3', compiler: 'py3' },
+	{ name: 'Lua', compiler: 'lua' }
 ];
 
 interface LanguageResponse {

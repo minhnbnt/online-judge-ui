@@ -7,7 +7,7 @@ export default defineConfig({
 		exclude: [
 			'codemirror',
 			'svelte-codemirror-editor',
-			'@codemirror/autocomplete',
+			'@codemirror/language',
 			'@codemirror/lang-cpp',
 			'@codemirror/lang-java',
 			'@codemirror/lang-python',
