@@ -9,10 +9,11 @@ export default defineConfig({
 			'svelte-codemirror-editor',
 			'@codemirror/autocomplete',
 			'@codemirror/lang-cpp',
-			"@codemirror/lang-java",
+			'@codemirror/lang-java',
 			'@codemirror/lang-python',
-			"@codemirror/lang-rust",
-			"@codemirror/lang-go",
+			'@codemirror/lang-rust',
+			'@codemirror/lang-go',
+			'@replit/codemirror-lang-csharp'
 		]
 	}
 });

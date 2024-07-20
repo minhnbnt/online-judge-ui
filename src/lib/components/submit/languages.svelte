@@ -8,7 +8,7 @@
 
 {#if show}
 	<div
-		transition:fly={{ duration: 200, y: 20 }}
+		transition:fly={{ duration: 200, y: -20 }}
 		class="absolute top-14 flex w-[160px] flex-col rounded-lg bg-white p-2 shadow"
 	>
 		{#each languages as entry}

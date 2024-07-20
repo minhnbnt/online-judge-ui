@@ -1,6 +1,4 @@
-import axios from 'axios';
-
-import { PUBLIC_API_LANGUAGE } from '$env/static/public';
+import instance from '$lib/services/api';
 
 export interface Language {
 	name: string;
@@ -24,7 +22,7 @@ interface LanguageResponse {
 }
 
 export async function getCompilerVersion(compilerName: string) {
-	const response = await axios.get(PUBLIC_API_LANGUAGE);
+	const response = await instance.get('/runtimes/');
 	const entries = response.data as Array<LanguageResponse>;
 
 	const target = entries.filter(({ language, aliases }) => {

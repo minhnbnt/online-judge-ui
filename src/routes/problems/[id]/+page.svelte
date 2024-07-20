@@ -14,7 +14,7 @@
 </script>
 
 <header class="sticky top-0 z-50 flex justify-end p-10 pb-0">
-	<Submit />
+	<Submit problem={data.id} />
 </header>
 
 <svelte:head>

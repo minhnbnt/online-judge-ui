@@ -1,9 +1,21 @@
 <script lang="ts">
 	import CodeMirror from 'svelte-codemirror-editor';
-	import { python } from '@codemirror/lang-python';
+	import getSyntaxHightlighter from './syntaxHighlighter';
+
 	import './style.css';
 
 	export let source: string;
+	export let language: string | undefined;
+
+	function getLang() {
+		if (language === undefined) {
+			return undefined;
+		}
+
+		return getSyntaxHightlighter(language);
+	}
 </script>
 
-<CodeMirror bind:value={source} lang={python()} />
+{#key language}
+	<CodeMirror bind:value={source} lang={getLang()} />
+{/key}
