@@ -22,7 +22,8 @@ interface TokenPayload {
 	is_staff: boolean;
 }
 
-const defaultCookieOptions = {
+const defaultCookieOptions: Cookies.CookieAttributes = {
+	sameSite: 'strict',
 	secure: true
 };
 

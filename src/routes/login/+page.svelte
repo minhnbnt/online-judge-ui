@@ -25,7 +25,11 @@
 		clearNotifications();
 
 		const errResponse = await handleSubmit(event.target as HTMLFormElement);
-		const { status, data } = errResponse!;
+		if (errResponse === undefined) {
+			return;
+		}
+
+		const { status, data } = errResponse;
 
 		if (status === 401) {
 			newError('Error: Username or\npassword does not match.');
