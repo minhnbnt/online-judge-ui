@@ -1,34 +1,20 @@
-<script>
-	import { PUBLIC_LOGO_SRC } from '$env/static/public';
+<script lang="ts">
+	import Submit from '$lib/components/submit/main.svelte';
 
-	const HOME_PAGE = 'https://svelte.dev/';
+	export let id: string;
+	export let title: string;
+	export let level: number;
 </script>
 
-<nav class="sticky top-0 z-50 items-center bg-red-50 shadow-red-50">
-	<div class="flex items-center justify-between p-4 lg:px-8">
-		<!-- Icon -->
-		<div>
-			<a href={HOME_PAGE}>
-				<img class="h-9" src={PUBLIC_LOGO_SRC} alt="Svelte" />
-			</a>
+<head class="sticky top-0 z-50 flex border-b bg-white px-10 py-3 shadow">
+	<div class="mt-2 flex grow items-center space-x-6">
+		<div class="flex grow justify-between text-lg">
+			<p><strong>{id}</strong> - {title}</p>
+			<p>Level: {level}</p>
 		</div>
 
-		<!-- Links -->
-		<div class="flex">
-			<a class="header-link" href="problems">Problems</a>
-			<a class="header-link" href="submissions">Submissions</a>
-			<a class="header-link" href="ranking">Ranking</a>
-		</div>
-
-		<!-- account -->
-		<div>
-			<a class="header-link" href="login">Login</a>
+		<div class="w-[400px]">
+			<Submit problem={id} />
 		</div>
 	</div>
-</nav>
-
-<style>
-	.header-link {
-		@apply m-1 flex rounded-lg p-1 px-2 font-semibold text-gray-700 transition-colors hover:bg-red-100 hover:text-black;
-	}
-</style>
+</head>

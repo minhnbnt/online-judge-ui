@@ -34,18 +34,16 @@
 	}
 </script>
 
-<div class="relative w-[400px]">
-	<div class="select-none space-y-2 rounded-lg bg-white p-2 shadow">
-		<div class="flex space-x-2">
-			<Button bind:showDropDown bind:targetLanguage />
+<div class="relative w-full">
+	<div class="flex space-x-2">
+		<Button bind:showDropDown bind:targetLanguage />
 
-			<label class="file-uploader" for="file-uploader"> Choose a file. </label>
-			<button class="rounded bg-red-500 px-2 text-white hover:bg-red-600" on:click={onSubmit}>
-				Submit
-			</button>
-		</div>
-		<input type="file" on:change={readFile} id="file-uploader" />
+		<label class="file-uploader" for="file-uploader"> Choose a file. </label>
+		<button class="rounded bg-red-500 px-2 text-white hover:bg-red-600" on:click={onSubmit}>
+			Submit
+		</button>
 	</div>
+	<input type="file" on:change={readFile} id="file-uploader" />
 
 	{#if sauce}
 		<div
