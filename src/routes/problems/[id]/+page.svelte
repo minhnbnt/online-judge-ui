@@ -19,6 +19,8 @@
 </svelte:head>
 
 <Header {id} {title} {level} />
-<article class="prose m-10 max-w-full rounded-lg border bg-white px-[1.25rem] text-justify shadow">
-	<Markdown {carta} value={description} />
+<article class="m-10 grow rounded-lg border bg-white shadow">
+	<div class="prose m-[1.25rem] max-w-full text-justify">
+		<Markdown {carta} value={description} />
+	</div>
 </article>

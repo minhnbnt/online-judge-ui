@@ -9,12 +9,10 @@
 <head class="sticky top-0 z-50 flex border-b bg-white px-10 py-3 shadow">
 	<div class="mt-2 flex grow items-center space-x-6">
 		<div class="flex grow justify-between text-lg">
-			<p><strong>{id}</strong> - {title}</p>
+			<p><span class="font-bold">{id}</span> - {title}</p>
 			<p>Level: {level}</p>
 		</div>
 
-		<div class="w-[400px]">
-			<Submit problem={id} />
-		</div>
+		<Submit problem={id} class="w-[400px]" />
 	</div>
 </head>
