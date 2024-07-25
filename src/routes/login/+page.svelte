@@ -1,50 +1,9 @@
 <script lang="ts">
-	import { get } from 'svelte/store';
-
 	import handleSubmit from './handleLogin';
 	import Logo from '$lib/assets/logo.svelte';
-	import { notifyContextStore } from '$lib/stores/notification';
 
-	const { addNotification, clearNotifications } = get(notifyContextStore);
-
-	interface BadRequestResponse {
-		username?: Array<string>;
-		password?: Array<string>;
-	}
-
-	function newError(message: string) {
-		addNotification({
-			text: message,
-			position: 'bottom-right',
-			type: 'error',
-			removeAfter: 5000
-		});
-	}
-
-	async function onSubmit(event: SubmitEvent) {
-		clearNotifications();
-
-		const errResponse = await handleSubmit(event.target as HTMLFormElement);
-		if (errResponse === undefined) {
-			return;
-		}
-
-		const { status, data } = errResponse;
-
-		if (status === 401) {
-			newError('Error: Username or\npassword does not match.');
-			return;
-		}
-
-		const { username, password } = data as BadRequestResponse;
-
-		if (password) {
-			newError('Password error: ' + password.join('\n'));
-		}
-
-		if (username) {
-			newError('Username error: ' + username.join('\n'));
-		}
+	function onSubmit(event: SubmitEvent) {
+		handleSubmit(event.target as HTMLFormElement);
 	}
 </script>
 
