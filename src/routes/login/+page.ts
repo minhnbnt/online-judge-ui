@@ -1,11 +1,10 @@
-import { redirect } from '@sveltejs/kit';
-import type { PageLoad } from './$types';
-import { isAuthorized } from '$lib/services/auth';
+import type { PageLoad } from '../$types';
 
-export const ssr = true;
-
-export const load: PageLoad = async () => {
-	if (await isAuthorized()) {
-		redirect(303, '/');
+export const load: PageLoad = ({ url }) => {
+	let nextUrl = url.searchParams.get('next');
+	if (nextUrl === null) {
+		nextUrl = '/';
 	}
+
+	return { nextUrl };
 };

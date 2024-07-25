@@ -1,9 +1,9 @@
 <script>
-	import { goto } from '$app/navigation';
-
-	import { userInfo } from '$lib/stores/userInfo';
 	import { ArrowRightEndOnRectangle, Icon } from 'svelte-hero-icons';
 	import Actions from './actions.svelte';
+
+	import gotoLoginPage from '$lib/utils/gotoLoginPage';
+	import { userInfo } from '$lib/stores/userInfo';
 
 	const avatar =
 		'https://cdn-icpc.ptit.edu.vn/ptitcode/profile/um4ZEmt54c1gAfO0m1wwQ7YxGbNZPOseEKs7Cvn8.png';
@@ -23,7 +23,7 @@
 			<p class="ms-3 truncate">{username}</p>
 		</button>
 	{:else}
-		<button on:click={() => goto('/login')}>
+		<button on:click={gotoLoginPage}>
 			<Icon src={ArrowRightEndOnRectangle} solid class="size-7" />
 			<p class="ms-3 font-medium">Login</p>
 		</button>

@@ -1,14 +1,15 @@
 <script>
-	import { goto } from '$app/navigation';
-	import { handleLoggedOut } from '$lib/services/auth';
 	import { fly } from 'svelte/transition';
+
+	import { handleLoggedOut } from '$lib/services/auth';
+	import gotoLoginPage from '$lib/utils/gotoLoginPage';
 
 	const actions = [
 		{
 			name: 'Logout',
 			func() {
 				handleLoggedOut();
-				goto('/');
+				gotoLoginPage();
 			}
 		}
 	];

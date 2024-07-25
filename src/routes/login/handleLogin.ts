@@ -24,7 +24,7 @@ function init() {
 	};
 }
 
-export default async function handleSubmit(formData: HTMLFormElement) {
+export default async function handleSubmit(formData: HTMLFormElement, nextUrl: string) {
 	init();
 
 	let response = undefined;
@@ -43,7 +43,7 @@ export default async function handleSubmit(formData: HTMLFormElement) {
 	}
 
 	handleLoggedin(response.data);
-	goto('/problems');
+	await goto(nextUrl);
 }
 
 function onError({ status, data }: AxiosResponse) {

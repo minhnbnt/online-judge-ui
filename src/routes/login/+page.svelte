@@ -1,10 +1,17 @@
 <script lang="ts">
 	import handleSubmit from './handleLogin';
+	import checkIfLoggedin from './checkIfLoggedin';
+
 	import Logo from '$lib/assets/logo.svelte';
+	import { onMount } from 'svelte';
+
+	export let data: { nextUrl: string };
 
 	function onSubmit(event: SubmitEvent) {
-		handleSubmit(event.target as HTMLFormElement);
+		handleSubmit(event.target as HTMLFormElement, data.nextUrl);
 	}
+
+	onMount(checkIfLoggedin);
 </script>
 
 <main class="flex h-screen max-h-screen items-center justify-center bg-gray-50">
