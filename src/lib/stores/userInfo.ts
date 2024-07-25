@@ -3,7 +3,7 @@ import { derived, writable } from 'svelte/store';
 
 export const accessTokenStore = writable<string | undefined>();
 
-interface UserInfo {
+export interface UserInfo {
 	username: string;
 	is_staff: boolean;
 }

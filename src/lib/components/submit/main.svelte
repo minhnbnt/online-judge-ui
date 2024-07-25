@@ -55,6 +55,10 @@
 </div>
 
 <style>
+	:global(button, .file-uploader) {
+		@apply transition-colors duration-200;
+	}
+
 	input[type='file'] {
 		display: none;
 	}

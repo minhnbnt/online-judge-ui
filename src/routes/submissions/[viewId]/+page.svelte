@@ -3,7 +3,6 @@
 	import { languages } from '$lib/utils/languages';
 
 	export let data;
-	console.log(data);
 
 	let { source, owner, judgeResult, language, version, summittedOn } = data;
 

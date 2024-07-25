@@ -19,14 +19,15 @@
 
 	let displayMarkdown = '';
 
-	function setDisplay(detail: string) {
+	let setDisplay = (detail: string) => {
 		if (!detail.trim()) {
 			detail = 'Preview will be displayed right here.';
 		}
 
-		const f = debounce(() => (displayMarkdown = detail), 100);
-		f();
-	}
+		displayMarkdown = detail;
+	};
+
+	setDisplay = debounce(setDisplay, 500);
 
 	async function onSubmit() {
 		await handleSubmit({

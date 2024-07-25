@@ -73,6 +73,10 @@ export async function isAuthorized(): Promise<boolean> {
 	}
 }
 
+export async function refreshAccessToken() {
+	await isAuthorized();
+}
+
 export async function getAccessToken(): Promise<string | undefined> {
 	return (await isAuthorized()) ? get(accessTokenStore) : undefined;
 }

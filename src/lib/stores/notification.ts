@@ -15,11 +15,11 @@ interface AddNotificationProps {
 }
 
 // TODO: replace unknown by function type
-interface ContextType {
+export interface NotificationContext {
 	addNotification: (props: AddNotificationProps) => void;
 	clearNotifications: () => void;
 	removeNotification: unknown;
 	subscribe: unknown;
 }
 
-export const notifyContextStore = writable<ContextType>();
+export const notifyContextStore = writable<NotificationContext>();

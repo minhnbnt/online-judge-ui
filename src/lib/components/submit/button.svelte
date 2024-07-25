@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { type Language } from '$lib/utils/languages';
-	import { ChevronUp, Icon } from 'svelte-hero-icons';
+	import { ChevronDown, Icon } from 'svelte-hero-icons';
 
 	export let showDropDown: boolean;
 	export let targetLanguage: Language | undefined;
@@ -18,6 +18,6 @@
 		{/if}
 	</p>
 	<div class="mr-1 size-5 duration-200" class:rotate-180={showDropDown}>
-		<Icon src={ChevronUp} />
+		<Icon src={ChevronDown} />
 	</div>
 </button>
