@@ -57,6 +57,7 @@ export async function isAuthorized(): Promise<boolean> {
 
 	const refresh = Cookies.get(JWT_REFRESH_COOKIE_KEY);
 	if (refresh === undefined) {
+		accessTokenStore.set(undefined);
 		return false;
 	}
 
@@ -65,9 +66,9 @@ export async function isAuthorized(): Promise<boolean> {
 		const { access } = response.data;
 
 		accessTokenStore.set(access);
-
 		return true;
 	} catch (err) {
+		accessTokenStore.set(undefined);
 		console.error(err);
 		return false;
 	}
