@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
 
-	import { type Language } from '$lib/utils/languages';
+	import { type Language } from '$lib/types/languages';
 	import CodeEditor from '../codeEditor/main.svelte';
 
 	import Button from './button.svelte';
@@ -42,7 +42,7 @@
 	</div>
 	<input type="file" on:change={readFile} id="file-uploader" />
 
-	{#if targetCompiler}
+	{#if targetCompiler || sauce}
 		<div
 			transition:fly={{ duration: 200, y: -20 }}
 			class="absolute top-14 h-[300px] w-full overflow-hidden rounded-lg border bg-white shadow"

@@ -1,11 +1,7 @@
 import instance from '$lib/services/api';
+import type { Language } from '$lib/types/languages';
 
-export interface Language {
-	name: string;
-	compiler: string;
-}
-
-export const languages = [
+export const languages: Array<Language> = [
 	{ name: 'C', compiler: 'gcc' },
 	{ name: 'C++', compiler: 'g++' },
 	{ name: 'C#', compiler: 'c#.net' },
