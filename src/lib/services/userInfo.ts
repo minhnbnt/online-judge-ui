@@ -1,6 +1,6 @@
 import { decodeJwt } from 'jose';
 
-import instance from './api';
+import { instance } from './api';
 import { type UserInfoResponse } from '$lib/types/userInfo';
 
 // TODO: add error handling

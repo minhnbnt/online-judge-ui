@@ -3,7 +3,7 @@ import { get } from 'svelte/store';
 
 import type { AxiosError, AxiosResponse } from 'axios';
 
-import instance from '$lib/services/api';
+import { instance } from '$lib/services/api';
 import { handleLoggedin } from '$lib/services/auth';
 import { notifyContextStore } from '$lib/stores/notification';
 

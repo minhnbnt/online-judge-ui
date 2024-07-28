@@ -1,4 +1,4 @@
-import instance from '$lib/services/api';
+import { instance } from '$lib/services/api';
 import type { Language } from '$lib/types/languages';
 
 export const languages: Array<Language> = [

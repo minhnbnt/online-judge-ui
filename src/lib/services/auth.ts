@@ -2,7 +2,7 @@ import { get } from 'svelte/store';
 import { decodeJwt } from 'jose';
 import Cookies from 'js-cookie';
 
-import instance from './api';
+import { instance } from './api';
 import { accessTokenStore } from '$lib/stores/userInfo';
 
 const JWT_REFRESH_COOKIE_KEY = 'JWTRefreshToken';

@@ -1,4 +1,4 @@
-import instance from '$lib/services/api';
+import { instance } from '$lib/services/api';
 import type { Submission } from '$lib/types/submissions';
 
 export default async function fetchSubmissions(page: number) {

@@ -1,6 +1,6 @@
 import { goto } from '$app/navigation';
 
-import instance from '$lib/services/api';
+import { instance } from '$lib/services/api';
 import { getAccessToken } from '$lib/services/auth';
 
 interface Payload {
@@ -30,5 +30,5 @@ export default async function handleSubmit(payload: Payload) {
 	// TODO: handle on bad requests
 	instance.post('/problems/', payload, config);
 
-	goto('/problems');
+	await goto('/problems');
 }
