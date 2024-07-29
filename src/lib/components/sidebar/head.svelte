@@ -12,3 +12,9 @@
 		<p class="ms-2 text-xl font-semibold">Online Judge</p>
 	</div>
 </a>
+
+<style>
+	a {
+		@apply flex rounded-lg hover:bg-red-100;
+	}
+</style>

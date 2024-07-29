@@ -11,9 +11,3 @@
 		<AccountActions />
 	</div>
 </aside>
-
-<style>
-	:global(a) {
-		@apply flex rounded-lg hover:bg-red-100;
-	}
-</style>

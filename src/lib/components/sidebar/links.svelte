@@ -30,3 +30,9 @@
 		</a>
 	{/each}
 </div>
+
+<style>
+	a {
+		@apply flex rounded-lg hover:bg-red-100;
+	}
+</style>
