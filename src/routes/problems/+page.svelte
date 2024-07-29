@@ -1,5 +1,7 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { Plus, Icon } from 'svelte-hero-icons';
+
 	import ProblemList from '$lib/components/problemList.svelte';
 	import { userInfo } from '$lib/stores/userInfo';
 
@@ -23,10 +25,16 @@
 	<title>Online Judge</title>
 </svelte:head>
 
-<ProblemList problems={data.results} />
+<div class="m-10 max-w-full overflow-hidden rounded-lg border bg-white shadow">
+	<ProblemList problems={data.results} />
+</div>
 
 {#if $userInfo?.is_staff}
-	<a class="absolute bottom-10 right-10 rounded-lg bg-white p-3 shadow" href="/admin/create">
+	<button
+		title="Create new problems."
+		on:click={() => goto('/admin/create')}
+		class="absolute bottom-10 right-10 rounded-lg bg-white p-3 shadow"
+	>
 		<Icon src={Plus} class="size-8" />
-	</a>
+	</button>
 {/if}

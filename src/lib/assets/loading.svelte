@@ -1,9 +1,14 @@
 <!-- Source: https://flowbite.com/docs/components/spinner/#colors -->
 
+<script lang="ts">
+	let className;
+	export { className as class };
+</script>
+
 <div role="status">
 	<svg
 		aria-hidden="true"
-		class="size-12 animate-spin fill-red-400 text-gray-300"
+		class={className}
 		viewBox="0 0 100 101"
 		fill="none"
 		xmlns="http://www.w3.org/2000/svg"

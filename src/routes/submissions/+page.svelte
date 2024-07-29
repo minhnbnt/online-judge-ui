@@ -12,7 +12,7 @@
 
 {#await promise}
 	<div class="m-10 flex grow justify-center">
-		<Loading />
+		<Loading class="size-12 animate-spin fill-red-400 text-gray-300" />
 	</div>
 {:then submissions}
 	<div

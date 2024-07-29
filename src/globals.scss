@@ -16,10 +16,10 @@ body {
 
 	code {
 		font-family: 'Fira Code', monospace;
-		@apply rounded bg-gray-50 p-[2px] px-[3px];
+		@apply rounded bg-gray-50 p-[2px] px-[3px] font-bold;
 	}
 
 	pre > code {
-		@apply bg-transparent p-0;
+		@apply bg-transparent p-0 font-normal;
 	}
 }
