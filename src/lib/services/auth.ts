@@ -6,6 +6,7 @@ import { instance } from './api';
 import { accessTokenStore } from '$lib/stores/userInfo';
 
 const JWT_REFRESH_COOKIE_KEY = 'JWTRefreshToken';
+const COOKIES_LIFETIME = 30; // days
 
 interface TokenResponse {
 	access: string;
@@ -18,14 +19,12 @@ interface TokenPayload {
 	iat: number;
 	jti: string;
 	user_id: number;
-	username: string;
-	is_staff: boolean;
 }
 
 const defaultCookieOptions: Cookies.CookieAttributes = {
 	sameSite: 'strict',
 	secure: true
-};
+} as const;
 
 function accessTokenIsValid() {
 	const token = get(accessTokenStore);
@@ -40,8 +39,13 @@ function accessTokenIsValid() {
 	return Date.now() < oneMinuteBeforeExp * 1000;
 }
 
-export function handleLoggedin({ access, refresh }: TokenResponse) {
-	Cookies.set(JWT_REFRESH_COOKIE_KEY, refresh, defaultCookieOptions);
+export function handleLoggedin({ access, refresh }: TokenResponse, remember: boolean) {
+	const config: Cookies.CookieAttributes = { ...defaultCookieOptions };
+	if (remember) {
+		config.expires = COOKIES_LIFETIME;
+	}
+
+	Cookies.set(JWT_REFRESH_COOKIE_KEY, refresh, config);
 	accessTokenStore.set(access);
 }
 

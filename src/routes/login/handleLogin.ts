@@ -1,7 +1,7 @@
 import { goto } from '$app/navigation';
 import { get } from 'svelte/store';
 
-import type { AxiosError, AxiosResponse } from 'axios';
+import { AxiosError, type AxiosResponse } from 'axios';
 
 import { instance } from '$lib/services/api';
 import { handleLoggedin } from '$lib/services/auth';
@@ -9,7 +9,7 @@ import { notifyContextStore } from '$lib/stores/notification';
 
 let newError: (message: string) => void;
 
-function init() {
+function prepareNotifier() {
 	const { addNotification, clearNotifications } = get(notifyContextStore);
 
 	clearNotifications();
@@ -24,31 +24,37 @@ function init() {
 	};
 }
 
-export default async function handleSubmit(formData: HTMLFormElement, nextUrl: string) {
-	init();
+export default async function handleSubmit(event: SubmitEvent, nextUrl: string) {
+	const formData = new FormData(event.target! as HTMLFormElement);
 
-	let response = undefined;
+	let response;
 
 	try {
 		response = await instance.postForm('/token/', formData);
 	} catch (err) {
-		const errorResponse = (err as AxiosError).response;
-
-		if (errorResponse === undefined) {
+		if (!(err instanceof AxiosError)) {
 			throw err;
 		}
 
-		onError(errorResponse);
+		if (err.response === undefined) {
+			throw err;
+		}
+
+		onError(err.response);
 		return;
 	}
 
-	handleLoggedin(response.data);
+	const remember = formData.get('remember') || false;
+
+	handleLoggedin(response.data, remember as boolean);
 	await goto(nextUrl);
 }
 
 function onError({ status, data }: AxiosResponse) {
+	prepareNotifier();
+
 	if (status === 401) {
-		newError('Error: Username or\npassword does not match.');
+		newError("Error: Username or password doesn't match.");
 		return;
 	}
 

@@ -8,7 +8,7 @@
 	export let data: { nextUrl: string };
 
 	function onSubmit(event: SubmitEvent) {
-		handleSubmit(event.target as HTMLFormElement, data.nextUrl);
+		handleSubmit(event, data.nextUrl);
 	}
 
 	onMount(checkIfLoggedin);
@@ -25,14 +25,10 @@
 		</div>
 		<form class="my-3 flex flex-col space-y-4" on:submit|preventDefault={onSubmit}>
 			<input type="text" class="input" placeholder="Username" name="username" />
-			<input type="password" placeholder="Password" class="input" name="password" />
+			<input type="password" class="input" placeholder="Password" name="password" />
 
 			<label>
-				<input
-					type="checkbox"
-					id="default-checkbox"
-					class="h-4 w-4 rounded bg-gray-100 text-blue-600"
-				/>
+				<input type="checkbox" name="remember" class="h-4 w-4 rounded bg-gray-100 text-blue-600" />
 				Remember me
 			</label>
 			<div class="ml-auto">
