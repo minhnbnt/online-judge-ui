@@ -33,6 +33,6 @@
 
 <style>
 	a {
-		@apply flex rounded-lg hover:bg-red-100;
+		@apply flex rounded-lg transition-colors duration-200 hover:bg-red-100;
 	}
 </style>

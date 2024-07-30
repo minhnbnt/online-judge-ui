@@ -7,7 +7,7 @@
 	import { userInfo, accessTokenStore } from '$lib/stores/userInfo';
 
 	const avatar =
-		'https://cdn-icpc.ptit.edu.vn/ptitcode/profile/um4ZEmt54c1gAfO0m1wwQ7YxGbNZPOseEKs7Cvn8.png';
+		'https://cdn-icpc.ptit.edu.vn/ptitcode/profile/zWGiE6M26FtipuZTIafynTqQjarIRoaIrvlY4FqP.png';
 
 	$: username = $userInfo?.username;
 
@@ -39,5 +39,6 @@
 <style>
 	button {
 		@apply flex w-full select-none items-center rounded-lg p-2 text-lg hover:bg-red-100;
+		@apply transition-colors duration-200;
 	}
 </style>

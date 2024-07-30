@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+
 	interface Problem {
 		id: string;
 		title: string;
@@ -20,13 +22,11 @@
 
 	<tbody>
 		{#each problems as { id, title, level }, index}
-			<tr class="select-none border-t odd:bg-white even:bg-gray-50 hover:bg-blue-50">
+			<tr class="table-contents">
 				<td class="text-center">{index + 1}</td>
 				<td class="text-center">{id}</td>
-				<td>
-					<a href={`/problems/${id}`} class="flex">
-						{title}
-					</a>
+				<td class="cursor-pointer" on:click={() => goto(`/problems/${id}`)}>
+					{title}
 				</td>
 				<td class="text-center">{level}</td>
 			</tr>
@@ -35,6 +35,10 @@
 </table>
 
 <style>
+	.table-contents {
+		@apply select-none border-t odd:bg-white even:bg-gray-50 hover:bg-blue-50;
+		@apply transition-colors duration-200;
+	}
 	th {
 		@apply p-2 px-4;
 	}

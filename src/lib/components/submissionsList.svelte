@@ -84,7 +84,7 @@
 		@apply select-none border-t text-center odd:bg-white even:bg-gray-50;
 	}
 	.hoverable {
-		@apply hover:bg-blue-50;
+		@apply transition-colors duration-200 hover:bg-blue-50;
 	}
 
 	th {
