@@ -17,7 +17,7 @@
 <main class="flex h-screen max-h-screen items-center justify-center bg-gray-50">
 	<div class="m-10 flex rounded-xl border bg-white p-8 shadow">
 		<div class="mr-8 space-y-2 border-r pr-8">
-			<div class="flex h-16 space-x-4">
+			<div class="flex h-16 items-center space-x-4">
 				<Logo />
 			</div>
 			<h1 class="text-2xl font-bold">Login</h1>
@@ -27,8 +27,9 @@
 			<input type="text" class="input" placeholder="Username" name="username" />
 			<input type="password" class="input" placeholder="Password" name="password" />
 
-			<label>
-				<input type="checkbox" name="remember" class="h-4 w-4 rounded bg-gray-100 text-blue-600" />
+			<label class="relative items-center ps-[24px]">
+				<input type="checkbox" name="remember" />
+				<span class="checkmark"></span>
 				Remember me
 			</label>
 			<div class="ml-auto">
@@ -38,11 +39,49 @@
 	</div>
 </main>
 
-<style>
+<style lang="scss">
+	* {
+		@apply transition-colors duration-200;
+	}
+
 	.input {
 		@apply rounded border bg-gray-50 p-2 px-3;
 	}
-	button {
-		@apply rounded-full bg-blue-700 p-2 px-5 text-white hover:bg-blue-600;
+
+	.checkmark:after {
+		content: '';
+		-webkit-transform: rotate(45deg);
+		-ms-transform: rotate(45deg);
+		transform: rotate(45deg);
+		@apply absolute left-[7px] top-[2px];
+	}
+
+	.checkmark,
+	input[type='checkbox'] {
+		@apply absolute left-0 top-0 size-5 rounded;
+	}
+
+	input:checked ~ .checkmark:after {
+		border-width: 0px 3px 3px 0px;
+		@apply h-[14px] w-[7px] border-white;
+	}
+
+	input:checked ~ .checkmark {
+		@apply bg-red-600 hover:bg-red-500; // checked
+		@apply transition-all;
+	}
+
+	input[type='checkbox'] {
+		appearance: none;
+		-webkit-appearance: none;
+		@apply border border-gray-300 bg-gray-200; // unchecked color
+
+		&:hover {
+			@apply border-none bg-red-300;
+		}
+	}
+
+	button[type='submit'] {
+		@apply rounded-full bg-red-600 p-2 px-5 pb-[0.44rem] text-white hover:bg-red-500;
 	}
 </style>
