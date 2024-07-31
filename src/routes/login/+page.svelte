@@ -7,11 +7,13 @@
 
 	export let data: { nextUrl: string };
 
+	const { nextUrl } = data;
+
 	function onSubmit(event: SubmitEvent) {
-		handleSubmit(event, data.nextUrl);
+		handleSubmit(event, nextUrl);
 	}
 
-	onMount(checkIfLoggedin);
+	onMount(async () => await checkIfLoggedin(nextUrl));
 </script>
 
 <main class="flex h-screen max-h-screen items-center justify-center bg-gray-50">

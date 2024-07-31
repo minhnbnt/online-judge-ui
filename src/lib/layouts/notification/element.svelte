@@ -33,15 +33,18 @@
 	}
 </script>
 
-<div class={`${getBgColor()} notification`} transition:fly|global={{ duration: 200, y: '50%' }}>
-	<p class={`${getBorderColor()} mr-2 min-w-fit grow border-r pr-3`}>{text}</p>
+<div class={getBgColor()} transition:fly|global={{ duration: 200, y: '50%' }}>
+	<p class={getBorderColor()}>{text}</p>
 	<button on:click={onRemove} class={`${getBorderColor()}`}>
 		<Icon src={XMark} class="size-6" />
 	</button>
 </div>
 
 <style>
-	.notification {
+	p {
+		@apply mr-2 min-w-fit grow border-r pr-3;
+	}
+	div {
 		@apply m-3 flex min-w-[180px] items-center justify-between rounded-lg p-3 shadow;
 	}
 </style>

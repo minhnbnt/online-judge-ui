@@ -4,7 +4,7 @@ import { goto } from '$app/navigation';
 import { getUserInfo } from '$lib/stores/userInfo';
 import { notifyContextStore } from '$lib/stores/notification';
 
-export default async function checkIfLoggedin() {
+export default async function checkIfLoggedin(nextUrl = '/') {
 	const info = await getUserInfo();
 	if (info === undefined) {
 		return;
@@ -18,5 +18,5 @@ export default async function checkIfLoggedin() {
 		removeAfter: 5000
 	});
 
-	await goto('/');
+	await goto(nextUrl);
 }
