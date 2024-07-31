@@ -1,9 +1,9 @@
 <script lang="ts">
-	import handleSubmit from './handleLogin';
-	import checkIfLoggedin from './checkIfLoggedin';
+	import { onMount } from 'svelte';
 
 	import Logo from '$lib/assets/logo.svelte';
-	import { onMount } from 'svelte';
+	import handleSubmit from './handleLogin';
+	import checkIfLoggedin from './checkIfLoggedin';
 
 	export let data: { nextUrl: string };
 

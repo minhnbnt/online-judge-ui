@@ -1,35 +1,56 @@
-import { derived, writable } from 'svelte/store';
+import { decodeJwt } from 'jose';
+import { Mutex } from 'async-mutex';
+import { get, readonly, writable } from 'svelte/store';
 
-import { fetchUserInfo } from '$lib/services/userInfo';
+import { instance } from '$lib/services/api';
+import { getAccessToken } from '$lib/services/auth';
 import { type UserInfoResponse } from '$lib/types/userInfo';
 
-/* Please don't use this directly, use getAccessToken instead.
+const userInfoStore = writable<UserInfoResponse | undefined>();
+export const userInfo = readonly(userInfoStore);
+
+const mutex = new Mutex();
+
+// we must use lambda function :0
+const refreshUserInfo = (accessToken: string | undefined) =>
+	mutex.runExclusive(async () => {
+		if (accessToken === undefined) {
+			userInfoStore.set(undefined);
+			return;
+		}
+
+		const userInfo = get(userInfoStore);
+		const idToken = getUserId(accessToken);
+
+		/* this will avoid both recursive and fetch twice
+		 * just make sure userId returned equals with ones in accessToken */
+		if (idToken === userInfo?.id) {
+			return;
+		}
+
+		const config = {
+			headers: { Authorization: `Bearer ${accessToken}` }
+		};
+
+		const response = await instance.get(`/users/info/${idToken}`, config);
+		const info = response.data as UserInfoResponse;
+
+		userInfoStore.set(info);
+	});
+
+function getUserId(accessToken: string) {
+	const { user_id } = decodeJwt(accessToken);
+	return user_id as number;
+}
+
+/* Please don't use this for requests, use getAccessToken instead.
  * It will try to fetch new accessToken when needed */
 export const accessTokenStore = writable<string | undefined>();
+accessTokenStore.subscribe(async (token) => refreshUserInfo(token));
 
-type AccessToken = typeof accessTokenStore;
-type Response = UserInfoResponse | undefined;
+export async function getUserInfo() {
+	const accessToken = await getAccessToken();
+	await refreshUserInfo(accessToken);
 
-let cachedAccessToken: string | undefined;
-
-export const userInfo = derived<AccessToken, Response>(
-	accessTokenStore,
-
-	(token, set) => {
-		/* sometime it trigger this function even if access token not changed :(((
-		 * so we will make a guard to prevent redundant fetch because it's expensive */
-		const accessTokenUpdated = cachedAccessToken !== token;
-		if (!accessTokenUpdated) {
-			return;
-		}
-
-		if (token === undefined) {
-			return;
-		}
-
-		fetchUserInfo(token).then((value) => set(value));
-		cachedAccessToken = token;
-	},
-
-	undefined
-);
+	return get(userInfoStore);
+}

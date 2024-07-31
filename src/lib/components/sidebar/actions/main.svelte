@@ -9,8 +9,6 @@
 	const avatar =
 		'https://cdn-icpc.ptit.edu.vn/ptitcode/profile/zWGiE6M26FtipuZTIafynTqQjarIRoaIrvlY4FqP.png';
 
-	$: username = $userInfo?.username;
-
 	let revealAction = false;
 </script>
 
@@ -21,11 +19,13 @@
 			<Icon src={ArrowRightEndOnRectangle} solid class="size-7" />
 			<p class="ms-3 font-medium">Login</p>
 		</button>
-	{:else if userInfo === undefined}
+	{:else if $userInfo === undefined}
 		<!-- Fetching data -->
 		<Loading class="size-12 animate-spin fill-red-400 text-gray-300" />
 	{:else}
 		<!-- Fetched -->
+		{@const username = $userInfo.username}
+
 		{#if revealAction}
 			<Actions />
 		{/if}
