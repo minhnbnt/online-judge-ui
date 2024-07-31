@@ -1,6 +1,8 @@
 <script lang="ts">
-	import { languages, type Language } from '$lib/utils/languages';
 	import { fly } from 'svelte/transition';
+
+	import { languages } from '$lib/utils/languages';
+	import { type Language } from '$lib/types/languages';
 
 	export let show: boolean;
 	export let targetLanguage: Language | undefined;

@@ -4,6 +4,7 @@
 
 	import ProblemList from '$lib/components/problemList.svelte';
 	import { userInfo } from '$lib/stores/userInfo';
+	import { fade } from 'svelte/transition';
 
 	interface Problem {
 		id: string;
@@ -33,6 +34,7 @@
 	<button
 		title="Create new problems."
 		on:click={() => goto('/admin/create')}
+		transition:fade={{ duration: 200 }}
 		class="absolute bottom-10 right-10 rounded-lg bg-white p-3 shadow"
 	>
 		<Icon src={Plus} class="size-8" />

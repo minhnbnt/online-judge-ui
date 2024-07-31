@@ -45,6 +45,6 @@
 		@apply mr-2 min-w-fit grow border-r pr-3;
 	}
 	div {
-		@apply m-3 flex min-w-[180px] items-center justify-between rounded-lg p-3 shadow;
+		@apply m-2 flex min-w-[180px] items-center justify-between rounded-lg p-3 shadow;
 	}
 </style>

@@ -2,18 +2,7 @@ import { goto } from '$app/navigation';
 
 import { instance } from '$lib/services/api';
 import { getAccessToken } from '$lib/services/auth';
-
-interface Payload {
-	id: string;
-	title: string;
-	description: string;
-	level: number;
-	stdin?: string;
-	stdout: string;
-	runFlags: string;
-	timeLimit?: number;
-	memoryLimit?: number;
-}
+import { type Problem as Payload } from '$lib/types/problem';
 
 export default async function handleSubmit(payload: Payload) {
 	const accessToken = await getAccessToken();
@@ -28,7 +17,7 @@ export default async function handleSubmit(payload: Payload) {
 	};
 
 	// TODO: handle on bad requests
-	instance.post('/problems/', payload, config);
+	await instance.post('/problems/', payload, config);
 
 	await goto('/problems');
 }
