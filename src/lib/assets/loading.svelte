@@ -1,7 +1,7 @@
 <!-- Source: https://flowbite.com/docs/components/spinner/#colors -->
 
 <script lang="ts">
-	let className;
+	let className = '';
 	export { className as class };
 </script>
 

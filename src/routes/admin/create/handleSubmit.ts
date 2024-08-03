@@ -2,7 +2,7 @@ import { goto } from '$app/navigation';
 
 import { instance } from '$lib/services/api';
 import { getAccessToken } from '$lib/services/auth';
-import { type Problem as Payload } from '$lib/types/problem';
+import { type ProblemSubmitPayload as Payload } from '$lib/types/problem';
 
 export default async function handleSubmit(payload: Payload) {
 	const accessToken = await getAccessToken();

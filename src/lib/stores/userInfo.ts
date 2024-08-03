@@ -12,8 +12,8 @@ export const userInfo = readonly(userInfoStore);
 const mutex = new Mutex();
 
 // we must use lambda function :0
-const refreshUserInfo = (accessToken: string | undefined) =>
-	mutex.runExclusive(async () => {
+const refreshUserInfo = async (accessToken: string | undefined) =>
+	await mutex.runExclusive(async () => {
 		if (accessToken === undefined) {
 			userInfoStore.set(undefined);
 			return;

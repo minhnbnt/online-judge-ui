@@ -1,4 +1,4 @@
-export interface Problem {
+export interface ProblemSubmitPayload {
 	id?: string;
 	title?: string;
 	description?: string;
@@ -8,4 +8,10 @@ export interface Problem {
 	runFlags?: string;
 	timeLimit?: number;
 	memoryLimit?: number;
+}
+
+export interface ProblemEntry {
+	id: string;
+	title: string;
+	level: number;
 }

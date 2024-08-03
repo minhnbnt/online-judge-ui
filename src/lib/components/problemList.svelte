@@ -1,13 +1,8 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { type ProblemEntry } from '$lib/types/problem';
 
-	interface Problem {
-		id: string;
-		title: string;
-		level: number;
-	}
-
-	export let problems: Array<Problem>;
+	export let problems: Array<ProblemEntry>;
 </script>
 
 <table class="w-full table-fixed px-10">
@@ -36,7 +31,8 @@
 
 <style>
 	.table-contents {
-		@apply select-none border-t odd:bg-white even:bg-gray-50 hover:bg-blue-50;
+		@apply odd:bg-white even:bg-gray-50 hover:bg-blue-50;
+		@apply select-none border-t;
 		@apply transition-colors duration-200;
 	}
 	th {
