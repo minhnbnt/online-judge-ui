@@ -2,12 +2,17 @@
 	import { Icon, XMark } from 'svelte-hero-icons';
 	import { fly } from 'svelte/transition';
 
+	export let withoutStyles = false;
 	export let notification;
 	export let onRemove;
 
 	const { text, type } = notification;
 
 	function getBgColor() {
+		if (withoutStyles) {
+			return;
+		}
+
 		if (type === 'error') {
 			return 'bg-red-600 text-white';
 		}
@@ -24,6 +29,10 @@
 	}
 
 	function getBorderColor() {
+		if (withoutStyles) {
+			return;
+		}
+
 		const types = ['error', 'warning', 'success'];
 		if (types.some((s) => type === s)) {
 			return 'border-white';

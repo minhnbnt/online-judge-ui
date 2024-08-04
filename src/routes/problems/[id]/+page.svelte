@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Markdown } from 'carta-md';
 	import carta from '$lib/utils/markdown/config.js';
-	import Header from '$lib/components/header.svelte';
+	import Header from '$lib/components/header/main.svelte';
 
 	interface Problem {
 		id: string;

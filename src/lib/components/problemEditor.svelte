@@ -4,7 +4,7 @@
 
 	import carta from '$lib/utils/markdown/config.js';
 	import CodeEditor from '$lib/components/codeEditor/main.svelte';
-	import { type Problem as Payload } from '$lib/types/problem';
+	import { type ProblemSubmitPayload as Payload } from '$lib/types/problem';
 
 	export let initialValue: Payload | undefined = undefined;
 	export let handleSubmit: (payload: Payload) => Promise<void>;
@@ -87,7 +87,7 @@
 		</div>
 	</div>
 
-	<div class="prose max-w-full overflow-hidden rounded-lg border bg-gray-50 p-3 empty:hidden">
+	<div class="prose max-w-full rounded-lg border bg-gray-50 p-3 empty:hidden">
 		{#key displayMarkdown}
 			<Markdown {carta} value={displayMarkdown} />
 		{/key}

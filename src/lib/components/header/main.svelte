@@ -1,5 +1,7 @@
 <script lang="ts">
 	import Submit from '$lib/components/submit/main.svelte';
+	import { userInfo } from '$lib/stores/userInfo';
+	import AdminActions from './adminActions.svelte';
 
 	export let id: string;
 	export let title: string;
@@ -12,6 +14,10 @@
 			<p><span class="font-bold">{id}</span> - {title}</p>
 			<p>Level: {level}</p>
 		</div>
+
+		{#if $userInfo?.is_staff}
+			<AdminActions problemId={id} />
+		{/if}
 
 		<Submit problem={id} class="w-[450px]" />
 	</div>
