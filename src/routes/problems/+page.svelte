@@ -22,7 +22,8 @@
 			const response = await instance.get('/problems', config);
 			const { count, results } = response.data;
 
-			numberOfPages = Math.ceil(count / PUBLIC_API_PAGE_SIZE);
+			const pageSize = parseInt(PUBLIC_API_PAGE_SIZE);
+			numberOfPages = Math.ceil(count / pageSize);
 
 			return results as Problem[];
 		} catch (error) {

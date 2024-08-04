@@ -1,7 +1,7 @@
 export interface Response {
 	count: number;
-	next: string;
-	previous: null;
+	next?: string;
+	previous?: string;
 	results: Submission[];
 }
 

@@ -3,10 +3,11 @@
 	import { PUBLIC_API_PAGE_SIZE } from '$env/static/public';
 
 	import { instance } from '$lib/services/api';
-	import { type Submission } from '$lib/types/submissions';
 	import Loading from '$lib/assets/loading.svelte';
 	import SubmissionList from '$lib/components/submissionsList.svelte';
 	import PageSelector from '$lib/components/pageSelector.svelte';
+
+	import { type Submission } from '$lib/types/submissions';
 
 	export let activePage = 1;
 	let numberOfPages: number | undefined;
@@ -18,12 +19,12 @@
 			const response = await instance.get('/submissions', config);
 			const { count, results } = response.data;
 
-			numberOfPages = Math.ceil(count / PUBLIC_API_PAGE_SIZE);
+			const pageSize = parseInt(PUBLIC_API_PAGE_SIZE);
+			numberOfPages = Math.ceil(count / pageSize);
 
 			return results as Submission[];
 		} catch (error) {
 			// TODO: send notification on error
-			numberOfPages = undefined;
 			return [];
 		}
 	}
