@@ -45,10 +45,16 @@
 {:then submissions}
 	{#if submissions.length > 0}
 		<div
-			class="m-10 max-w-full overflow-hidden rounded-lg border bg-white shadow"
+			class="m-10 max-w-full overflow-hidden rounded-lg border shadow"
 			transition:fade={{ duration: 200 }}
 		>
 			<SubmissionList {submissions} />
 		</div>
 	{/if}
 {/await}
+
+<style>
+	* {
+		@apply dark:border-gray-500;
+	}
+</style>

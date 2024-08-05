@@ -15,13 +15,22 @@
 	];
 </script>
 
-<div
-	transition:fly={{ duration: 200, y: 20 }}
-	class="mb-3 flex min-w-fit flex-col rounded-lg bg-white p-1 shadow"
->
+<div transition:fly={{ duration: 200, y: 20 }}>
 	{#each actions as { name, func }}
-		<button class="m-1 rounded text-start hover:bg-gray-100" on:click={func}>
+		<button on:click={func}>
 			<p class="ms-1">{name}</p>
 		</button>
 	{/each}
 </div>
+
+<style>
+	div {
+		@apply mb-3 flex min-w-fit flex-col rounded-lg bg-white p-1 shadow;
+		@apply dark:bg-gray-800 dark:shadow-none;
+	}
+
+	button {
+		@apply m-1 rounded text-start hover:bg-gray-100;
+		@apply dark:hover:bg-gray-700;
+	}
+</style>

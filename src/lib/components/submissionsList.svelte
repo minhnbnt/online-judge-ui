@@ -39,8 +39,8 @@
 	}
 </script>
 
-<table class="w-full table-fixed px-10">
-	<thead class="bg-gray-50 font-bold">
+<table class="w-full table-fixed px-10 dark:text-white">
+	<thead class="bg-gray-50 font-bold dark:bg-gray-800">
 		<tr>
 			<th class="w-[50px]">ID</th>
 			<th class="w-[150px]">Submittor</th>
@@ -80,11 +80,22 @@
 </table>
 
 <style>
-	.table-row {
-		@apply select-none border-t text-center odd:bg-white even:bg-gray-50;
+	* {
+		@apply dark:border-gray-500;
 	}
+
+	table {
+		@apply bg-white dark:bg-gray-900;
+	}
+
+	.table-row {
+		@apply select-none border-t text-center;
+		@apply even:bg-gray-50 dark:even:bg-gray-800;
+	}
+
 	.hoverable {
 		@apply transition-colors duration-200 hover:bg-blue-50;
+		@apply dark:hover:bg-blue-950;
 	}
 
 	th {

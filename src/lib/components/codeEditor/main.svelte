@@ -6,6 +6,7 @@
 
 	export let source: string;
 	export let language: string | undefined;
+	export let lineWrapping = false;
 
 	function getLang() {
 		if (language === undefined) {
@@ -17,5 +18,5 @@
 </script>
 
 {#key language}
-	<CodeMirror bind:value={source} lang={getLang()} />
+	<CodeMirror bind:value={source} lang={getLang()} {lineWrapping} />
 {/key}

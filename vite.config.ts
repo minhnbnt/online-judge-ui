@@ -10,6 +10,7 @@ export default defineConfig({
 		exclude: [
 			'codemirror',
 			'svelte-codemirror-editor',
+			"@codemirror/theme-one-dark",
 			'@codemirror/autocomplete',
 			'@codemirror/language',
 			'@codemirror/lang-cpp',

@@ -60,11 +60,22 @@
 
 {#if $userInfo?.is_staff}
 	<button
-		title="Create new problems."
+		title="Create new problem."
 		on:click={() => goto('/admin/create')}
 		transition:fade={{ duration: 200 }}
-		class="absolute bottom-10 right-10 rounded-lg bg-white p-3 shadow"
+		class="create-problem"
 	>
 		<Icon src={Plus} class="size-8" />
 	</button>
 {/if}
+
+<style>
+	* {
+		@apply dark:border-gray-500;
+	}
+
+	.create-problem {
+		@apply absolute bottom-10 right-10 rounded-lg border bg-white p-3 shadow;
+		@apply dark:bg-gray-800 dark:text-white;
+	}
+</style>

@@ -6,7 +6,6 @@
 	import { type Language } from '$lib/types/languages';
 	import CodeEditor from '../codeEditor/main.svelte';
 
-	import Button from './button.svelte';
 	import handleSubmit from './submitHandler';
 
 	import LanguageSelector from './languages.svelte';
@@ -39,7 +38,7 @@
 
 <div class={`${className} relative`}>
 	<div class="content flex grow space-x-2">
-		<Button bind:showDropDown bind:targetLanguage={targetCompiler} />
+		<LanguageSelector bind:showDropDown bind:targetLanguage={targetCompiler} />
 
 		<button title="Toggle editor" class="editor-opener" on:click={() => (showEditor = !showEditor)}>
 			<div class="size-5 duration-200" class:rotate-180={showEditor}>
@@ -48,10 +47,7 @@
 		</button>
 
 		<label class="file-uploader" for="file-uploader"> Choose a file. </label>
-		<button
-			class="rounded bg-red-500 px-2 text-white hover:bg-red-600"
-			on:click={() => handleSubmit(problem, sauce, targetCompiler)}
-		>
+		<button type="submit" on:click={() => handleSubmit(problem, sauce, targetCompiler)}>
 			Submit
 		</button>
 	</div>
@@ -71,18 +67,23 @@
 			</div>
 		</div>
 	{/if}
-
-	<LanguageSelector bind:show={showDropDown} bind:targetLanguage={targetCompiler} />
 </div>
 
 <style>
 	button,
 	.file-uploader {
 		@apply select-none transition-colors duration-200;
+		@apply dark:border-gray-500;
+	}
+
+	button[type='submit'] {
+		@apply rounded bg-red-500 px-2 text-white hover:bg-red-600;
+		@apply dark:border dark:bg-red-800 dark:hover:bg-red-700;
 	}
 
 	.editor-opener {
 		@apply justify-center rounded border bg-white px-[0.4rem] hover:bg-gray-50;
+		@apply dark:bg-gray-800 dark:hover:bg-gray-700;
 	}
 
 	.close-button {
@@ -102,6 +103,8 @@
 	}
 
 	.file-uploader {
-		@apply min-w-fit cursor-pointer rounded border border-red-200 bg-red-100 p-1 px-2 hover:bg-red-200;
+		@apply min-w-fit cursor-pointer rounded border p-1 px-2;
+		@apply border-red-200 bg-red-100 hover:bg-red-200;
+		@apply dark:border-gray-500 dark:bg-red-950 dark:hover:bg-red-900;
 	}
 </style>

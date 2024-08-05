@@ -24,13 +24,16 @@
 <style>
 	ul {
 		@apply flex divide-x overflow-hidden rounded-lg border bg-white;
+		@apply dark:divide-gray-500 dark:border-gray-500 dark:bg-gray-900;
+		@apply dark:text-white;
 	}
 
 	button {
-		@apply p-3 py-1 text-lg transition-colors duration-200 hover:bg-blue-50;
+		@apply p-3 py-1 text-lg transition-colors duration-200;
+		@apply hover:bg-blue-50 dark:hover:bg-blue-950;
 	}
 
 	.active {
-		@apply bg-gray-50;
+		@apply bg-gray-50 dark:bg-gray-800;
 	}
 </style>

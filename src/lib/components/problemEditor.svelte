@@ -55,84 +55,87 @@
 	$: setDisplay(description);
 </script>
 
-<div class="m-10 flex flex-col justify-between space-y-3 rounded-lg border bg-white p-5 shadow">
-	<h1>Create Problem</h1>
-
-	<div class="grid grid-cols-1 gap-3 md:grid-cols-3">
-		<div>
-			<label for="id">
-				ID: <span class="font-bold text-red-500">*</span>
-			</label>
-			<input type="text" id="id" placeholder="CHELLO" bind:value={id} />
-		</div>
-		<div>
-			<label for="title">
-				Title: <span class="font-bold text-red-500">*</span>
-			</label>
-			<input type="text" id="title" placeholder="Hello, world!" bind:value={title} />
-		</div>
-		<div>
-			<label for="level" class="grow">
-				Level: <span class="font-bold text-red-500">*</span>
-			</label>
-
-			<input type="number" id="level" bind:value={level} />
-		</div>
-	</div>
-
+<div class="grid grid-cols-1 gap-3 md:grid-cols-3">
 	<div>
-		Detail: <span class="font-bold text-red-500">*</span>
-		<div class="h-[300px] grow overflow-hidden rounded-lg border">
-			<CodeEditor bind:source={description} language="markdown" />
-		</div>
+		<label for="id">
+			ID: <span class="font-bold text-red-500">*</span>
+		</label>
+		<input type="text" id="id" placeholder="CHELLO" bind:value={id} />
 	</div>
-
-	<div class="prose max-w-full rounded-lg border bg-gray-50 p-3 empty:hidden">
-		{#key displayMarkdown}
-			<Markdown {carta} value={displayMarkdown} />
-		{/key}
+	<div>
+		<label for="title">
+			Title: <span class="font-bold text-red-500">*</span>
+		</label>
+		<input type="text" id="title" placeholder="Hello, world!" bind:value={title} />
 	</div>
+	<div>
+		<label for="level" class="grow">
+			Level: <span class="font-bold text-red-500">*</span>
+		</label>
 
-	<div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
-		<div class="flex flex-col space-y-1">
-			<label for="stdin"> Stdin: </label>
-			<textarea id="stdin" rows="4" bind:value={stdin} />
-		</div>
-
-		<div class="flex flex-col space-y-1">
-			<label for="stdout"> Stdout: <span class="font-bold text-red-500">*</span></label>
-			<textarea id="stdout" rows="4" bind:value={stdout} />
-		</div>
-
-		<div class="flex flex-col space-y-1">
-			<label for="flags"> Run flags: </label>
-			<textarea id="flags" rows="4" bind:value={runFlags} />
-		</div>
-
-		<div class="flex flex-col justify-center space-y-1">
-			<div>
-				<label for="timeLimit">Time limit: <span class="font-bold text-red-500">*</span></label>
-				<input type="number" id="timeLimit" bind:value={timeLimit} />
-			</div>
-			<div>
-				<label for="memLimit">Memory limit: <span class="font-bold text-red-500">*</span></label>
-				<input type="number" id="memLimit" bind:value={memoryLimit} />
-			</div>
-		</div>
-	</div>
-
-	<div class="flex justify-end">
-		<button on:click={onSubmit} class="rounded bg-red-500 p-1 px-2 text-white"> Submit </button>
+		<input type="number" id="level" bind:value={level} />
 	</div>
 </div>
 
+<div>
+	Detail: <span class="font-bold text-red-500">*</span>
+	<div class="h-[300px] grow overflow-hidden rounded-lg border">
+		<CodeEditor lineWrapping bind:source={description} language="markdown" />
+	</div>
+</div>
+
+<article class="prose dark:prose-invert">
+	{#key displayMarkdown}
+		<Markdown {carta} value={displayMarkdown} />
+	{/key}
+</article>
+
+<div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+	<div class="flex flex-col space-y-1">
+		<label for="stdin"> Stdin: </label>
+		<textarea id="stdin" rows="4" bind:value={stdin} />
+	</div>
+
+	<div class="flex flex-col space-y-1">
+		<label for="stdout"> Stdout: <span class="font-bold text-red-500">*</span></label>
+		<textarea id="stdout" rows="4" bind:value={stdout} />
+	</div>
+
+	<div class="flex flex-col space-y-1">
+		<label for="flags"> Run flags: </label>
+		<textarea id="flags" rows="4" bind:value={runFlags} />
+	</div>
+
+	<div class="flex flex-col justify-center space-y-1">
+		<div>
+			<label for="timeLimit">Time limit: <span class="font-bold text-red-500">*</span></label>
+			<input type="number" id="timeLimit" bind:value={timeLimit} />
+		</div>
+		<div>
+			<label for="memLimit">Memory limit: <span class="font-bold text-red-500">*</span></label>
+			<input type="number" id="memLimit" bind:value={memoryLimit} />
+		</div>
+	</div>
+</div>
+
+<div class="flex justify-end">
+	<button on:click={onSubmit} class="rounded bg-red-500 p-1 px-2 text-white"> Submit </button>
+</div>
+
 <style>
-	h1 {
-		@apply mb-5 text-2xl font-bold;
+	* {
+		@apply dark:border-gray-500;
 	}
 
-	textarea {
+	article {
+		@apply max-w-full rounded-lg p-3 empty:hidden;
+		@apply bg-gray-50 dark:bg-gray-900;
+	}
+
+	textarea,
+	input {
 		@apply rounded border bg-gray-50 p-2;
+		@apply dark:bg-gray-900;
 	}
 
 	label {
@@ -140,6 +143,6 @@
 	}
 
 	input {
-		@apply w-full rounded border bg-gray-50 p-2 py-1;
+		@apply w-full py-1;
 	}
 </style>

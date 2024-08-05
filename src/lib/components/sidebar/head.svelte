@@ -16,5 +16,6 @@
 <style>
 	a {
 		@apply flex rounded-lg transition-colors duration-200 hover:bg-red-100;
+		@apply dark:hover:bg-rose-950;
 	}
 </style>

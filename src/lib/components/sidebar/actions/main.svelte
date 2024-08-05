@@ -12,7 +12,7 @@
 	let revealAction = false;
 </script>
 
-<div class="absolute bottom-0 mt-3 w-full border-t bg-red-50 pt-3">
+<div class="absolute bottom-0 mt-3 w-full border-t bg-inherit pt-3 dark:border-gray-500">
 	{#if $accessTokenStore === undefined}
 		<!-- Isn't logged in -->
 		<button on:click={gotoLoginPage}>
@@ -30,7 +30,7 @@
 			<Actions />
 		{/if}
 		<button on:click={() => (revealAction = !revealAction)}>
-			<img src={avatar} alt={username} class="h-11 rounded-full" />
+			<img src={avatar} alt={username} class="h-11 rounded-full border dark:border-gray-500" />
 			<p class="ms-3 truncate">{username}</p>
 		</button>
 	{/if}
@@ -40,5 +40,7 @@
 	button {
 		@apply flex w-full select-none items-center rounded-lg p-2 text-lg hover:bg-red-100;
 		@apply transition-colors duration-200;
+
+		@apply dark:hover:bg-rose-950;
 	}
 </style>

@@ -6,5 +6,6 @@ export default {
 	theme: {
 		extend: {}
 	},
-	plugins: [Typography]
+	plugins: [Typography],
+	darkMode: 'selector'
 };

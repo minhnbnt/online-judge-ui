@@ -5,8 +5,8 @@
 	export let problems: Array<ProblemEntry>;
 </script>
 
-<table class="w-full table-fixed px-10">
-	<thead class="bg-gray-50 font-bold">
+<table class="w-full table-fixed bg-white px-10 dark:bg-gray-900 dark:text-white">
+	<thead class="bg-gray-50 font-bold dark:bg-gray-800">
 		<tr>
 			<th class="w-[50px]">No.</th>
 			<th class="w-[120px]">ID</th>
@@ -30,10 +30,16 @@
 </table>
 
 <style>
+	* {
+		@apply dark:border-gray-500;
+	}
+
 	.table-contents {
-		@apply odd:bg-white even:bg-gray-50 hover:bg-blue-50;
 		@apply select-none border-t;
 		@apply transition-colors duration-200;
+
+		@apply even:bg-gray-50 hover:bg-blue-50;
+		@apply dark:even:bg-gray-800 dark:hover:bg-blue-950;
 	}
 	th {
 		@apply p-2 px-4;

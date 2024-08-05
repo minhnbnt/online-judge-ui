@@ -19,8 +19,15 @@
 </svelte:head>
 
 <Header {id} {title} {level} />
-<article class="m-10 grow rounded-lg border bg-white shadow">
-	<div class="prose m-[1.25rem] max-w-full text-justify">
+<article>
+	<div class="prose m-[1.25rem] max-w-full text-justify dark:prose-invert">
 		<Markdown {carta} value={description} />
 	</div>
 </article>
+
+<style>
+	article {
+		@apply m-10 grow rounded-lg border bg-white shadow;
+		@apply dark:border-gray-500 dark:bg-gray-800 dark:shadow-none;
+	}
+</style>

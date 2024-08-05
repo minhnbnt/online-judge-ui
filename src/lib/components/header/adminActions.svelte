@@ -24,12 +24,15 @@
 	button {
 		@apply flex w-[2.3rem] items-center justify-center rounded;
 		@apply transition-colors duration-200;
+		@apply dark:border-gray-500;
 	}
 	.edit {
 		@apply border bg-yellow-50 hover:bg-yellow-100;
+		@apply dark:bg-yellow-900 dark:hover:bg-yellow-800;
 	}
 
 	.delete {
 		@apply bg-red-500 text-white hover:bg-red-600;
+		@apply dark:border dark:bg-red-800 dark:hover:bg-red-700;
 	}
 </style>
