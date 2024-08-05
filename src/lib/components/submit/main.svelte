@@ -24,6 +24,12 @@
 
 	let targetCompiler: Language | undefined;
 	$: compilerName = targetCompiler?.compiler;
+	$: if (showDropDown) showEditor = false;
+
+	function toggleEditor() {
+		showEditor = !showEditor;
+		showDropDown = false;
+	}
 
 	async function readFile(e: any) {
 		const target = e.target.files.item(0);
@@ -40,7 +46,7 @@
 	<div class="content flex grow space-x-2">
 		<LanguageSelector bind:showDropDown bind:targetLanguage={targetCompiler} />
 
-		<button title="Toggle editor" class="editor-opener" on:click={() => (showEditor = !showEditor)}>
+		<button title="Toggle editor" class="editor-opener" on:click={toggleEditor}>
 			<div class="size-5 duration-200" class:rotate-180={showEditor}>
 				<Icon src={ChevronDown} />
 			</div>
@@ -70,10 +76,13 @@
 </div>
 
 <style>
+	* {
+		@apply dark:border-gray-500;
+	}
+
 	button,
 	.file-uploader {
 		@apply select-none transition-colors duration-200;
-		@apply dark:border-gray-500;
 	}
 
 	button[type='submit'] {
@@ -88,13 +97,15 @@
 
 	.close-button {
 		@apply rounded p-[0.1rem] hover:bg-red-500 hover:text-white;
+		@apply dark:hover:bg-red-700;
 	}
 
 	.editor-wrapper {
-		@apply overflow-hidden border bg-white shadow;
-		@apply h-[300px] min-h-[100px] w-full min-w-[150px] resize;
+		@apply z-[100] h-[300px] min-h-[100px] w-full min-w-[150px] resize;
 		@apply rounded-lg rounded-bl-none;
 		@apply absolute right-0 top-14;
+		@apply overflow-hidden border bg-white shadow;
+		@apply dark:bg-gray-900 dark:text-white;
 		direction: rtl;
 	}
 

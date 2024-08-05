@@ -40,5 +40,6 @@
 <style>
 	.container {
 		@apply rounded-lg border bg-white shadow;
+		@apply text-white dark:border-gray-500 dark:bg-gray-800;
 	}
 </style>

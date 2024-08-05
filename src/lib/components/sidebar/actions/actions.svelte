@@ -3,24 +3,21 @@
 
 	import { handleLoggedOut } from '$lib/services/auth';
 	import gotoLoginPage from '$lib/utils/gotoLoginPage';
+	import { toggleDarkMode } from '$lib/stores/darkmode';
 
-	const actions = [
-		{
-			name: 'Logout',
-			func() {
-				handleLoggedOut();
-				gotoLoginPage();
-			}
-		}
-	];
+	function onClickLogout() {
+		handleLoggedOut();
+		gotoLoginPage();
+	}
 </script>
 
 <div transition:fly={{ duration: 200, y: 20 }}>
-	{#each actions as { name, func }}
-		<button on:click={func}>
-			<p class="ms-1">{name}</p>
-		</button>
-	{/each}
+	<button on:click={onClickLogout}>
+		<p>Logout</p>
+	</button>
+	<button on:click={toggleDarkMode}>
+		<p>Toggle dark mode</p>
+	</button>
 </div>
 
 <style>
@@ -30,7 +27,7 @@
 	}
 
 	button {
-		@apply m-1 rounded text-start hover:bg-gray-100;
+		@apply m-1 rounded px-1 text-start hover:bg-gray-100;
 		@apply dark:hover:bg-gray-700;
 	}
 </style>

@@ -1,6 +1,6 @@
 <script>
 	import Notification from '$lib/layouts/notification/main.svelte';
-	import { darkMode } from '$lib/stores/darkmodeStore';
+	import { darkMode } from '$lib/stores/darkmode';
 
 	import '../globals.scss';
 </script>
@@ -49,7 +49,7 @@
 	/>
 </svelte:head>
 
-<div class:dark={darkMode}>
+<div class:dark={$darkMode}>
 	<Notification>
 		<slot />
 	</Notification>
