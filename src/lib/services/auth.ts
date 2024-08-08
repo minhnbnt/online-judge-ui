@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 
 import { instance } from './api';
 import { accessTokenStore } from '$lib/stores/userInfo';
+import type { AxiosRequestHeaders } from 'axios';
 
 const JWT_REFRESH_COOKIE_KEY = 'JWTRefreshToken';
 const COOKIES_LIFETIME = 30; // days
@@ -84,4 +85,13 @@ export async function refreshAccessToken() {
 
 export async function getAccessToken(): Promise<string | undefined> {
 	return (await isAuthorized()) ? get(accessTokenStore) : undefined;
+}
+
+export async function getAuthConfig() {
+	const accessToken = await getAccessToken();
+	if (accessToken === undefined) {
+		return {};
+	}
+
+	return { headers: { Authorization: `Bearer ${accessToken}` } };
 }

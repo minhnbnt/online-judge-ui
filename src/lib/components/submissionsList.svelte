@@ -4,8 +4,8 @@
 	import { type Submission } from '$lib/types/submissions';
 	import { languages } from '$lib/utils/languages';
 	import { userInfo } from '$lib/stores/userInfo';
-	import { getAccessToken } from '$lib/services/auth';
 	import { instance } from '$lib/services/api';
+	import { getAuthConfig, isAuthorized } from '$lib/services/auth';
 
 	export let submissions: Submission[];
 
@@ -13,15 +13,13 @@
 	languages.forEach(({ name, compiler }) => languagesMap.set(compiler, name));
 
 	async function gotoSubmission(id: number) {
-		const accessToken = await getAccessToken();
-		if (accessToken === undefined) {
-			// TODO: handle on session expired
+		// TODO: handle on session expired
+		if (!(await isAuthorized())) {
 			return;
 		}
 
-		const response = await instance.get(`/submissions/get/${id}`, {
-			headers: { Authorization: `Bearer ${accessToken}` }
-		});
+		const config = await getAuthConfig();
+		const response = await instance.get(`/submissions/get/${id}`, config);
 
 		await goto(`/submissions/${response.data.viewId}`);
 	}

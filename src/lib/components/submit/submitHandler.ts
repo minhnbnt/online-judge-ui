@@ -1,7 +1,7 @@
 import { goto } from '$app/navigation';
 
 import { instance } from '$lib/services/api';
-import { getAccessToken } from '$lib/services/auth';
+import { getAuthConfig, isAuthorized } from '$lib/services/auth';
 import { getCompilerVersion } from '$lib/utils/languages';
 
 import { type Language } from '$lib/types/languages';
@@ -11,9 +11,7 @@ async function handleSubmit(problem: string, source: string, language: Language 
 		throw new Error('Please choose a language to continue');
 	}
 
-	const accessToken = await getAccessToken();
-
-	if (accessToken === undefined) {
+	if (!(await isAuthorized())) {
 		throw new Error('Please sign in to perform this actions');
 	}
 
@@ -26,10 +24,7 @@ async function handleSubmit(problem: string, source: string, language: Language 
 		source: source
 	};
 
-	const config = {
-		headers: { Authorization: `Bearer ${accessToken}` }
-	};
-
+	const config = await getAuthConfig();
 	const response = await instance.post('submissions/', payload, config);
 
 	await goto(`/submissions/${response.data.viewId}`);

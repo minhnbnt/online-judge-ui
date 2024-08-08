@@ -4,22 +4,19 @@ import type { PageLoad } from './$types';
 import { AxiosError } from 'axios';
 
 import { instance } from '$lib/services/api';
-import { getAccessToken } from '$lib/services/auth';
+import { getAuthConfig, isAuthorized } from '$lib/services/auth';
 
 export const load: PageLoad = async ({ params }) => {
 	const { id } = params;
 
-	const accessToken = await getAccessToken();
-	if (!accessToken === undefined) {
-		error(403, 'Please signin as admin to perform this action');
+	if (!(await isAuthorized())) {
+		error(403, 'Please signin to perform this action');
 	}
 
-	const config = {
-		headers: { Authorization: `Bearer ${accessToken}` }
-	};
-
 	try {
+		const config = await getAuthConfig();
 		const response = await instance.get(`problems/${id}`, config);
+
 		return response.data;
 	} catch (err) {
 		if (!(err instanceof AxiosError)) {
