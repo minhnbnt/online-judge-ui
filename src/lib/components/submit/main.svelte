@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { fly } from 'svelte/transition';
+	import { fade, fly } from 'svelte/transition';
 	import { ChevronDown, Icon, XMark } from 'svelte-hero-icons';
 
 	import handleSubmit from './submitHandler';
-	import CodeEditor from '../codeEditor/main.svelte';
 	import LanguageSelector from './languages.svelte';
 	import { type Language } from '$lib/types/languages';
+	import Loading from '$lib/assets/loading.svelte';
 
 	export let problem: string;
 
@@ -64,8 +64,21 @@
 				</button>
 			</div>
 
-			<div class="h-full w-full overflow-hidden border-t" dir="ltr">
-				<CodeEditor bind:source={sauce} bind:language={compilerName} />
+			<div
+				dir="ltr"
+				transition:fade={{ duration: 200 }}
+				class="h-full w-full overflow-hidden border-t"
+			>
+				<!-- text editor is really large, so we will lazy loading it -->
+				{#await import('../codeEditor/main.svelte')}
+					<div class="flex h-full w-full items-center justify-center">
+						<Loading class="size-10" />
+					</div>
+				{:then { default: CodeEditor }}
+					<div class="h-full w-full" transition:fade={{ duration: 200 }}>
+						<CodeEditor bind:source={sauce} bind:language={compilerName} />
+					</div>
+				{/await}
 			</div>
 		</div>
 	{/if}

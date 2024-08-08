@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { nord } from 'cm6-theme-nord';
 	import CodeMirror from 'svelte-codemirror-editor';
 
 	import { darkMode } from '$lib/stores/darkmode';
@@ -11,20 +10,29 @@
 	export let language: string | undefined;
 	export let lineWrapping = false;
 
-	function getLang() {
+	let theme: any = undefined;
+
+	async function setTheme(isDark: boolean) {
+		if (!isDark) {
+			theme = undefined;
+			return;
+		}
+
+		const { nord } = await import('cm6-theme-nord');
+		theme = nord;
+	}
+
+	function getLang(): any {
 		if (language === undefined) {
 			return undefined;
 		}
 
 		return getSyntaxHightlighter(language);
 	}
+
+	$: setTheme($darkMode);
 </script>
 
-{#key [$darkMode, language]}
-	<CodeMirror
-		bind:value={source}
-		theme={$darkMode ? nord : undefined}
-		lang={getLang()}
-		{lineWrapping}
-	/>
+{#key [theme, language]}
+	<CodeMirror bind:value={source} lang={getLang()} {theme} {lineWrapping} />
 {/key}

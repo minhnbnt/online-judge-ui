@@ -1,10 +1,10 @@
+import { AxiosError } from 'axios';
 import { get } from 'svelte/store';
 import { decodeJwt } from 'jose';
 import Cookies from 'js-cookie';
 
 import { instance } from './api';
 import { accessTokenStore } from '$lib/stores/userInfo';
-import type { AxiosRequestHeaders } from 'axios';
 
 const JWT_REFRESH_COOKIE_KEY = 'JWTRefreshToken';
 const COOKIES_LIFETIME = 30; // days
@@ -73,9 +73,17 @@ export async function isAuthorized(): Promise<boolean> {
 		accessTokenStore.set(access);
 		return true;
 	} catch (err) {
-		accessTokenStore.set(undefined);
-		console.error(err);
-		return false;
+		if (!(err instanceof AxiosError)) {
+			throw err;
+		}
+
+		const sessionExpired = err.response?.status === 401;
+		if (sessionExpired) {
+			accessTokenStore.set(undefined);
+			return false;
+		}
+
+		throw err;
 	}
 }
 
