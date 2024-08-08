@@ -12,7 +12,7 @@ export const userInfo = readonly(userInfoStore);
 const mutex = new Mutex();
 
 // we must use lambda function :0
-const refreshUserInfo = async (accessToken: string | undefined) =>
+const refreshUserInfo = async (accessToken: string | undefined) => {
 	await mutex.runExclusive(async () => {
 		if (accessToken === undefined) {
 			userInfoStore.set(undefined);
@@ -37,6 +37,7 @@ const refreshUserInfo = async (accessToken: string | undefined) =>
 
 		userInfoStore.set(info);
 	});
+};
 
 function getUserId(accessToken: string) {
 	const { user_id } = decodeJwt(accessToken);

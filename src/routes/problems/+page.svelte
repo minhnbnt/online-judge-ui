@@ -2,13 +2,13 @@
 	import { goto } from '$app/navigation';
 	import { fade } from 'svelte/transition';
 	import { Plus, Icon } from 'svelte-hero-icons';
-	import { PUBLIC_API_PAGE_SIZE } from '$env/static/public';
 
 	import { instance } from '$lib/services/api';
 	import { userInfo } from '$lib/stores/userInfo';
 	import Loading from '$lib/assets/loading.svelte';
 	import ProblemList from '$lib/components/problemList.svelte';
 	import PageSelector from '$lib/components/pageSelector.svelte';
+	import { PUBLIC_API_PAGE_SIZE } from '$env/static/public';
 
 	import { type ProblemEntry as Problem } from '$lib/types/problem';
 

@@ -1,13 +1,11 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
-
-	import { type Language } from '$lib/types/languages';
-	import CodeEditor from '../codeEditor/main.svelte';
+	import { ChevronDown, Icon, XMark } from 'svelte-hero-icons';
 
 	import handleSubmit from './submitHandler';
-
+	import CodeEditor from '../codeEditor/main.svelte';
 	import LanguageSelector from './languages.svelte';
-	import { ChevronDown, Icon, XMark } from 'svelte-hero-icons';
+	import { type Language } from '$lib/types/languages';
 
 	export let problem: string;
 
