@@ -1,6 +1,4 @@
 <script lang="ts">
-	/* eslint-disable @typescript-eslint/no-explicit-any */
-
 	import { fly } from 'svelte/transition';
 
 	import { type Language } from '$lib/types/languages';
