@@ -60,7 +60,7 @@
 	<input type="file" on:change={readFile} id="file-uploader" />
 
 	{#if showEditor}
-		<div class="editor-wrapper" transition:fly={{ duration: 200, y: -20 }}>
+		<div class="editor-wrapper" dir="rtl" transition:fly={{ duration: 200, y: -20 }}>
 			<div class="m-1 flex items-center justify-between" dir="ltr">
 				<p class="ml-2 truncate">File name: {fileName || '[unknown]'}</p>
 				<button class="close-button" on:click={() => (showEditor = false)}>
@@ -101,12 +101,12 @@
 	}
 
 	.editor-wrapper {
+		@apply flex flex-col;
 		@apply z-[100] h-[300px] min-h-[100px] w-full min-w-[150px] resize;
 		@apply rounded-lg rounded-bl-none;
 		@apply absolute right-0 top-14;
 		@apply overflow-hidden border bg-white shadow;
 		@apply dark:bg-gray-900 dark:text-white;
-		direction: rtl;
 	}
 
 	input[type='file'] {

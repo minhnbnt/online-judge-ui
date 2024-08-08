@@ -1,7 +1,14 @@
+import { get } from 'svelte/store';
+
 import { refreshAccessToken } from '$lib/services/auth';
+import { accessTokenStore } from '$lib/stores/userInfo';
 
 export const ssr = true;
 
 export async function load() {
-	await refreshAccessToken();
+	/* sometimes accessToken can be undefined even if logged in
+	 * this can happen when user enter website with refreshToken available */
+	if (get(accessTokenStore) === undefined) {
+		await refreshAccessToken();
+	}
 }
