@@ -138,10 +138,6 @@
 		@apply dark:bg-gray-900;
 	}
 
-	label {
-		@apply items-center space-x-1;
-	}
-
 	input {
 		@apply w-full py-1;
 	}
