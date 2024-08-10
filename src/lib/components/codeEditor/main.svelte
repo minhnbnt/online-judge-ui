@@ -11,8 +11,9 @@
 	export let lineWrapping = false;
 
 	let theme: any = undefined;
+	let syntaxHighlighter: any = undefined;
 
-	async function setTheme(isDark: boolean) {
+	async function refreshTheme(isDark: boolean) {
 		if (!isDark) {
 			theme = undefined;
 			return;
@@ -22,17 +23,19 @@
 		theme = nord;
 	}
 
-	function getLang(): any {
+	async function refreshSyntaxHightlighter(language: string | undefined) {
 		if (language === undefined) {
-			return undefined;
+			syntaxHighlighter = undefined;
+			return;
 		}
 
-		return getSyntaxHightlighter(language);
+		syntaxHighlighter = await getSyntaxHightlighter(language);
 	}
 
-	$: setTheme($darkMode);
+	$: refreshSyntaxHightlighter(language);
+	$: refreshTheme($darkMode);
 </script>
 
-{#key [theme, language]}
-	<CodeMirror bind:value={source} lang={getLang()} {theme} {lineWrapping} />
+{#key [theme, syntaxHighlighter]}
+	<CodeMirror bind:value={source} lang={syntaxHighlighter} {theme} {lineWrapping} />
 {/key}

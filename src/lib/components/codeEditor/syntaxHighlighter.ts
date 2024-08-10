@@ -1,56 +1,80 @@
-import { StreamLanguage } from '@codemirror/language';
+const legacyModes = ['kt', 'lua', 'pas', 'sc', 'swift'];
 
-import { cpp } from '@codemirror/lang-cpp';
-import { go } from '@codemirror/lang-go';
-import { java } from '@codemirror/lang-java';
-import { python } from '@codemirror/lang-python';
-import { rust } from '@codemirror/lang-rust';
-import { csharp } from '@replit/codemirror-lang-csharp';
-import { markdown } from '@codemirror/lang-markdown';
+export default async function getSyntaxHightlighter(name: string) {
+	if (legacyModes.some((mode) => name === mode)) {
+		return await getLegacySyntaxHightlighter(name);
+	}
 
-import { kotlin, scala } from '@codemirror/legacy-modes/mode/clike';
-import { pascal } from '@codemirror/legacy-modes/mode/pascal';
-import { lua } from '@codemirror/legacy-modes/mode/lua';
-import { swift } from '@codemirror/legacy-modes/mode/swift';
-
-export default function getSyntaxHightlighter(name: string) {
 	switch (name) {
 		case 'gcc':
-		case 'g++':
+		case 'g++': {
+			const { cpp } = await import('@codemirror/lang-cpp');
 			return cpp();
+		}
 
-		case 'c#.net':
+		case 'c#.net': {
+			const { csharp } = await import('@replit/codemirror-lang-csharp');
 			return csharp();
+		}
 
-		case 'java':
+		case 'java': {
+			const { java } = await import('@codemirror/lang-java');
 			return java();
+		}
 
-		case 'rs':
+		case 'rs': {
+			const { rust } = await import('@codemirror/lang-rust');
 			return rust();
+		}
 
-		case 'go':
+		case 'go': {
+			const { go } = await import('@codemirror/lang-go');
 			return go();
+		}
 
-		case 'py3':
+		case 'py3': {
+			const { python } = await import('@codemirror/lang-python');
 			return python();
+		}
 
-		case 'markdown':
+		case 'markdown': {
+			const { markdown } = await import('@codemirror/lang-markdown');
 			return markdown();
+		}
 
-		case 'lua':
+		default:
+			return undefined;
+	}
+}
+
+async function getLegacySyntaxHightlighter(name: string) {
+	const { StreamLanguage } = await import('@codemirror/language');
+
+	switch (name) {
+		case 'lua': {
+			const { lua } = await import('@codemirror/legacy-modes/mode/lua');
 			return StreamLanguage.define(lua);
+		}
 
-		case 'kt':
+		case 'kt': {
+			const { kotlin } = await import('@codemirror/legacy-modes/mode/clike');
 			return StreamLanguage.define(kotlin);
+		}
 
-		case 'pas':
+		case 'pas': {
+			const { pascal } = await import('@codemirror/legacy-modes/mode/pascal');
 			return StreamLanguage.define(pascal);
+		}
 
-		case 'sc':
+		case 'sc': {
+			const { scala } = await import('@codemirror/legacy-modes/mode/clike');
 			return StreamLanguage.define(scala);
+		}
 
-		case 'swift':
+		case 'swift': {
+			const { swift } = await import('@codemirror/legacy-modes/mode/swift');
 			return StreamLanguage.define(swift);
+		}
 
 		default:
 			return undefined;
