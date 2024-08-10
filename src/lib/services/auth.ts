@@ -1,10 +1,9 @@
 import { AxiosError } from 'axios';
 import { get } from 'svelte/store';
-import { decodeJwt } from 'jose';
 import Cookies from 'js-cookie';
 
 import { instance } from './api';
-import { accessTokenStore } from '$lib/stores/userInfo';
+import { accessTokenPayload, accessTokenStore } from '$lib/stores/userInfo';
 
 const JWT_REFRESH_COOKIE_KEY = 'JWTRefreshToken';
 const COOKIES_LIFETIME = 30; // days
@@ -14,27 +13,16 @@ interface TokenResponse {
 	refresh: string;
 }
 
-interface TokenPayload {
-	token_type: string;
-	exp: number;
-	iat: number;
-	jti: string;
-	user_id: number;
-}
-
 const defaultCookieOptions: Cookies.CookieAttributes = {
 	sameSite: 'strict',
 	secure: true
 } as const;
 
 function accessTokenIsValid() {
-	const token = get(accessTokenStore);
-
-	if (token === undefined) {
+	const payload = get(accessTokenPayload);
+	if (payload === undefined) {
 		return false;
 	}
-
-	const payload = decodeJwt<TokenPayload>(token);
 
 	const oneMinuteBeforeExp = payload.exp - 60;
 	return Date.now() < oneMinuteBeforeExp * 1000;
@@ -60,18 +48,20 @@ export async function isAuthorized(): Promise<boolean> {
 		return true;
 	}
 
+	await refreshAccessToken();
+	return get(accessTokenStore) !== undefined;
+}
+
+export async function refreshAccessToken() {
 	const refresh = Cookies.get(JWT_REFRESH_COOKIE_KEY);
 	if (refresh === undefined) {
 		accessTokenStore.set(undefined);
-		return false;
+		return;
 	}
 
 	try {
 		const response = await instance.post('/token/refresh/', { refresh });
-		const { access } = response.data;
-
-		accessTokenStore.set(access);
-		return true;
+		accessTokenStore.set(response.data.access);
 	} catch (err) {
 		if (!(err instanceof AxiosError)) {
 			throw err;
@@ -80,15 +70,11 @@ export async function isAuthorized(): Promise<boolean> {
 		const sessionExpired = err.response?.status === 401;
 		if (sessionExpired) {
 			accessTokenStore.set(undefined);
-			return false;
+			return;
 		}
 
 		throw err;
 	}
-}
-
-export async function refreshAccessToken() {
-	await isAuthorized();
 }
 
 export async function getAccessToken(): Promise<string | undefined> {

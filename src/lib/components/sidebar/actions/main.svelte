@@ -1,10 +1,10 @@
 <script>
 	import { ArrowRightEndOnRectangle, Icon } from 'svelte-hero-icons';
-	import Actions from './actions.svelte';
 
+	import Actions from './actions.svelte';
 	import Loading from '$lib/assets/loading.svelte';
 	import gotoLoginPage from '$lib/utils/gotoLoginPage';
-	import { userInfo, accessTokenStore } from '$lib/stores/userInfo';
+	import { accessTokenStore, userInfo } from '$lib/stores/userInfo';
 
 	const avatar =
 		'https://cdn-icpc.ptit.edu.vn/ptitcode/profile/zWGiE6M26FtipuZTIafynTqQjarIRoaIrvlY4FqP.png';

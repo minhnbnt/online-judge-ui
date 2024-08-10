@@ -1,13 +1,33 @@
 import { decodeJwt } from 'jose';
 import { Mutex } from 'async-mutex';
-import { get, readonly, writable } from 'svelte/store';
+import { derived, get, readonly, writable } from 'svelte/store';
 
 import { instance } from '$lib/services/api';
-import { getAccessToken, getAuthConfig } from '$lib/services/auth';
 import { type UserInfoResponse } from '$lib/types/userInfo';
+import { getAccessToken, getAuthConfig } from '$lib/services/auth';
+
+interface TokenPayload {
+	token_type: string;
+	user_id: number;
+	exp: number;
+	iat: number;
+	jti: string;
+}
 
 const userInfoStore = writable<UserInfoResponse | undefined>();
 export const userInfo = readonly(userInfoStore);
+
+/* Please don't use this for requests, use getAccessToken instead.
+ * It will try to fetch new accessToken when needed */
+export const accessTokenStore = writable<string | undefined>();
+
+export const accessTokenPayload = derived(accessTokenStore, (token) => {
+	if (token === undefined) {
+		return undefined;
+	}
+
+	return decodeJwt<TokenPayload>(token);
+});
 
 const mutex = new Mutex();
 
@@ -20,38 +40,36 @@ const refreshUserInfo = async (accessToken: string | undefined) => {
 		}
 
 		const userInfo = get(userInfoStore);
-		const idToken = getUserId(accessToken);
+		const payload = get(accessTokenPayload);
 
 		/* this will avoid both recursive and fetch twice
 		 * just make sure userId returned equals with ones in accessToken */
-		if (idToken === userInfo?.id) {
+		if (payload?.user_id === userInfo?.id) {
 			return;
 		}
 
-		await fetchNewInfo(accessToken);
+		await fetchNewInfo();
 	});
 };
 
-export async function fetchNewInfo(accessToken: string) {
-	const id = getUserId(accessToken);
-	const config = await getAuthConfig();
+accessTokenStore.subscribe(refreshUserInfo);
 
-	const response = await instance.get(`/users/info/${id}`, config);
+async function fetchNewInfo() {
+	const payload = get(accessTokenPayload);
+	if (payload === undefined) {
+		userInfoStore.set(undefined);
+		return undefined;
+	}
+
+	const config = await getAuthConfig();
+	const userId = payload.user_id;
+
+	const response = await instance.get(`/users/info/${userId}`, config);
 	const info = response.data as UserInfoResponse;
 
 	userInfoStore.set(info);
 	return info;
 }
-
-function getUserId(accessToken: string) {
-	const { user_id } = decodeJwt(accessToken);
-	return user_id as number;
-}
-
-/* Please don't use this for requests, use getAccessToken instead.
- * It will try to fetch new accessToken when needed */
-export const accessTokenStore = writable<string | undefined>();
-accessTokenStore.subscribe(refreshUserInfo);
 
 export async function getUserInfo() {
 	const accessToken = await getAccessToken();
