@@ -16,3 +16,15 @@ const carta = new Carta({
 });
 
 export default carta;
+importKatexCSS();
+
+function importKatexCSS() {
+	const katexCss = document.createElement('link');
+
+	katexCss.rel = 'stylesheet';
+	katexCss.href = 'https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css';
+	katexCss.integrity = 'sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI';
+	katexCss.crossOrigin = 'anonymous';
+
+	document.head.append(katexCss);
+}

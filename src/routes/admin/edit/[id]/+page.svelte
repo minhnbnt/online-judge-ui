@@ -7,7 +7,7 @@
 	import ProblemEditor from '$lib/components/problemEditor.svelte';
 </script>
 
-<div class="wrapper">
+<div class="wrapper space-y-3">
 	<h1>Edit Problem</h1>
 	<ProblemEditor initialValue={data} {handleSubmit} />
 </div>

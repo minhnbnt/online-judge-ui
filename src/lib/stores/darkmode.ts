@@ -4,11 +4,11 @@ const DARK_MODE_STATE_KEY = 'darkModeEnable';
 
 function isDarkModePreferred() {
 	const savedValue = localStorage.getItem(DARK_MODE_STATE_KEY);
-	if (savedValue !== null) {
+	if (savedValue === null) {
 		return savedValue === 'true';
 	}
 
-	if (!window?.matchMedia) {
+	if (window?.matchMedia === undefined) {
 		return false;
 	}
 
@@ -25,6 +25,6 @@ export const darkMode = readonly(darkModeStore);
 export function toggleDarkMode() {
 	const newValue = !get(darkModeStore);
 
-	localStorage.setItem(DARK_MODE_STATE_KEY, String(newValue));
+	localStorage?.setItem(DARK_MODE_STATE_KEY, String(newValue));
 	darkModeStore.set(newValue);
 }

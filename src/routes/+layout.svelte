@@ -39,14 +39,6 @@
 		integrity="sha256-S8cCpP8ROBd3ZmGK9Pq2PJd6IC8dOyW2FVnTFnMxhto="
 		crossorigin="anonymous"
 	/>
-
-	<!-- KaTex for @cartamd/plugin-math -->
-	<link
-		rel="stylesheet"
-		href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css"
-		integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI"
-		crossorigin="anonymous"
-	/>
 </svelte:head>
 
 <div class:dark={$darkMode}>
