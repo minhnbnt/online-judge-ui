@@ -11,7 +11,6 @@ export default defineConfig({
 			'codemirror',
 			'svelte-codemirror-editor',
 			'cm6-theme-nord',
-			'@codemirror/autocomplete',
 			'@codemirror/language',
 			'@codemirror/lang-cpp',
 			'@codemirror/lang-java',
