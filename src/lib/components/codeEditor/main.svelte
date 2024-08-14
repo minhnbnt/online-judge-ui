@@ -1,7 +1,7 @@
 <script lang="ts">
 	import CodeMirror from 'svelte-codemirror-editor';
 
-	import { darkMode } from '$lib/stores/darkmode';
+	import { darkModeStore } from '$lib/stores/darkmode';
 	import getSyntaxHightlighter from './syntaxHighlighter';
 
 	import './style.css';
@@ -33,7 +33,7 @@
 	}
 
 	$: refreshSyntaxHightlighter(language);
-	$: refreshTheme($darkMode);
+	$: refreshTheme($darkModeStore);
 </script>
 
 {#key [theme, syntaxHighlighter]}

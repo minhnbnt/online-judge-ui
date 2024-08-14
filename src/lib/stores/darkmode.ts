@@ -1,10 +1,10 @@
-import { get, readonly, writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 
 const DARK_MODE_STATE_KEY = 'darkModeEnable';
 
-function isDarkModePreferred() {
+export function isDarkModePreferred() {
 	const savedValue = localStorage.getItem(DARK_MODE_STATE_KEY);
-	if (savedValue === null) {
+	if (savedValue !== null) {
 		return savedValue === 'true';
 	}
 
@@ -19,12 +19,11 @@ function isDarkModePreferred() {
 	return false;
 }
 
-const darkModeStore = writable<boolean>(isDarkModePreferred());
-export const darkMode = readonly(darkModeStore);
+export const darkModeStore = writable<boolean>(isDarkModePreferred());
 
 export function toggleDarkMode() {
 	const newValue = !get(darkModeStore);
 
-	localStorage?.setItem(DARK_MODE_STATE_KEY, String(newValue));
+	localStorage.setItem(DARK_MODE_STATE_KEY, String(newValue));
 	darkModeStore.set(newValue);
 }

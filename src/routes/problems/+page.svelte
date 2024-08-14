@@ -3,36 +3,25 @@
 	import { fade } from 'svelte/transition';
 	import { Plus, Icon } from 'svelte-hero-icons';
 
-	import { fetchProblem } from './apiCalls';
 	import { userInfo } from '$lib/stores/userInfo';
-	import Loading from '$lib/assets/loading.svelte';
 	import ProblemList from '$lib/components/problemList.svelte';
 	import PageSelector from '$lib/components/pageSelector.svelte';
+
 	import { type ProblemEntry as Problem } from '$lib/types/problem';
+	import fetchPage from '$lib/utils/fetchPage';
+	import Loading from '$lib/assets/loading.svelte';
 
-	export let activePage = 1;
+	export let activePage: number;
+	let numberOfPages = 0;
 
-	let problems: Problem[] = [];
-	let numberOfPages: number | undefined;
+	async function onActiveChange(page: number) {
+		const { nPages, results } = await fetchPage('/problems', page);
 
-	let isLoading = false;
-
-	async function onActiveChange(activePage: number) {
-		isLoading = true;
-
-		try {
-			const results = await fetchProblem(activePage);
-
-			numberOfPages = results.numberOfPages;
-			problems = results.problems;
-		} catch (err) {
-			console.log(err);
-		} finally {
-			isLoading = false;
-		}
+		numberOfPages = nPages;
+		return results as Problem[];
 	}
 
-	$: onActiveChange(activePage);
+	$: promise = onActiveChange(activePage);
 </script>
 
 <svelte:head>
@@ -45,15 +34,23 @@
 	{/if}
 </div>
 
-{#if isLoading}
+{#if numberOfPages > 1}
+	<div class="m-10 flex justify-end">
+		<PageSelector bind:activePage bind:numberOfPages />
+	</div>
+{/if}
+
+{#await promise}
 	<div class="m-10 flex h-12 justify-center">
 		<Loading class="size-12" />
 	</div>
-{:else if problems.length > 0}
-	<div class="m-10 max-w-full overflow-hidden rounded-lg border bg-white shadow">
-		<ProblemList {problems} />
-	</div>
-{/if}
+{:then problems}
+	{#if problems.length > 0}
+		<div class="m-10 max-w-full overflow-hidden rounded-lg border bg-white shadow">
+			<ProblemList {problems} />
+		</div>
+	{/if}
+{/await}
 
 {#if $userInfo?.is_staff}
 	<button

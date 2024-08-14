@@ -1,6 +1,8 @@
 <script>
+	import { ProgressBar } from '@prgm/sveltekit-progress-bar';
+
 	import Notification from '$lib/layouts/notification/main.svelte';
-	import { darkMode } from '$lib/stores/darkmode';
+	import { darkModeStore } from '$lib/stores/darkmode';
 
 	import '../globals.scss';
 </script>
@@ -41,7 +43,9 @@
 	/>
 </svelte:head>
 
-<div class:dark={$darkMode}>
+<ProgressBar class="text-red-500" zIndex={100} />
+
+<div class:dark={$darkModeStore}>
 	<Notification>
 		<slot />
 	</Notification>

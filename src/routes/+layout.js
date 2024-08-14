@@ -3,7 +3,7 @@ import { get } from 'svelte/store';
 import { refreshAccessToken } from '$lib/services/auth';
 import { accessTokenStore } from '$lib/stores/userInfo';
 
-export const ssr = true;
+export const ssr = false;
 
 export async function load() {
 	/* sometimes accessToken can be undefined even if logged in

@@ -1,38 +1,27 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
-	import { PUBLIC_API_PAGE_SIZE } from '$env/static/public';
 
-	import { instance } from '$lib/services/api';
+	import fetchPage from '$lib/utils/fetchPage';
 	import Loading from '$lib/assets/loading.svelte';
-	import SubmissionList from '$lib/components/submissionsList.svelte';
 	import PageSelector from '$lib/components/pageSelector.svelte';
+	import SubmissionList from '$lib/components/submissionsList.svelte';
 
-	import { type Submission } from '$lib/types/submissions';
+	import type { Submission } from '$lib/types/submissions';
 
-	export let activePage = 1;
-	let numberOfPages: number | undefined;
+	export let activePage: number;
+	let numberOfPages = 0;
 
-	async function fetchSubmissions(page: number) {
-		const config = { params: { page } };
+	async function onActiveChange(page: number) {
+		const { nPages, results } = await fetchPage('/submissions', page);
 
-		try {
-			const response = await instance.get('/submissions', config);
-			const { count, results } = response.data;
-
-			const pageSize = parseInt(PUBLIC_API_PAGE_SIZE);
-			numberOfPages = Math.ceil(count / pageSize);
-
-			return results as Submission[];
-		} catch (error) {
-			// TODO: send notification on error
-			return [];
-		}
+		numberOfPages = nPages;
+		return results as Submission[];
 	}
 
-	$: promise = fetchSubmissions(activePage);
+	$: promise = onActiveChange(activePage);
 </script>
 
-{#if numberOfPages}
+{#if numberOfPages > 1}
 	<div class="m-10 flex justify-end">
 		<PageSelector bind:activePage bind:numberOfPages />
 	</div>

@@ -15,3 +15,9 @@ export interface ProblemEntry {
 	title: string;
 	level: number;
 }
+
+export interface ProblemPageData {
+	activePage: number;
+	numberOfPages: number;
+	problems: ProblemEntry[];
+}
