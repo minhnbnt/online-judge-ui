@@ -25,6 +25,7 @@
 			<h1 class="text-2xl font-bold">Login</h1>
 			<p>Sign in to your account</p>
 		</div>
+
 		<form class="my-3 flex flex-col space-y-4" on:submit|preventDefault={onSubmit}>
 			<input type="text" class="input" placeholder="Username" name="username" />
 			<input type="password" class="input" placeholder="Password" name="password" />
@@ -34,7 +35,8 @@
 				<span class="checkmark"></span>
 				Remember me
 			</label>
-			<div class="ml-auto">
+			<div class="flex flex-col space-y-3">
+				<p>Doesn't have a account? <a href="/register">Register</a></p>
 				<button type="submit">Login</button>
 			</div>
 		</form>
@@ -44,6 +46,10 @@
 <style lang="scss">
 	* {
 		@apply transition-colors duration-200;
+	}
+
+	a {
+		@apply font-bold text-blue-700 hover:text-blue-600;
 	}
 
 	.input {
