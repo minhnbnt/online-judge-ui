@@ -1,5 +1,5 @@
 <script>
-	import {  ClipboardDocumentCheck, DocumentDuplicate, Icon } from 'svelte-hero-icons';
+	import { ClipboardDocumentCheck, DocumentDuplicate, Icon } from 'svelte-hero-icons';
 
 	const LINKS = [
 		{
@@ -11,7 +11,7 @@
 			name: 'Submissions',
 			href: '/submissions',
 			icon: ClipboardDocumentCheck
-		},
+		}
 	];
 </script>
 
