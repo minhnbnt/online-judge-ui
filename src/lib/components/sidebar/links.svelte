@@ -1,5 +1,5 @@
 <script>
-	import { ChartBar, ClipboardDocumentCheck, DocumentDuplicate, Icon } from 'svelte-hero-icons';
+	import {  ClipboardDocumentCheck, DocumentDuplicate, Icon } from 'svelte-hero-icons';
 
 	const LINKS = [
 		{
@@ -12,11 +12,6 @@
 			href: '/submissions',
 			icon: ClipboardDocumentCheck
 		},
-		{
-			name: 'Ranking',
-			href: '/ranking',
-			icon: ChartBar
-		}
 	];
 </script>
 
