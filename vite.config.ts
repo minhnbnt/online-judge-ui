@@ -2,6 +2,14 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+	css: {
+		preprocessorOptions: {
+			scss: {
+				api: 'modern-compiler' // or "modern"
+			}
+		}
+	},
+
 	plugins: [sveltekit()],
 	define: {
 		__ENABLE_CARTA_SSR_HIGHLIGHTER__: false
