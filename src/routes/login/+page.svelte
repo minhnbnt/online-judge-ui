@@ -72,7 +72,7 @@
 				</p>
 				<button
 					type="submit"
-					class="rounded-full bg-red-600 p-2 px-5 pb-[0.44rem] text-white hover:bg-red-500"
+					class="rounded-full bg-red-600 p-2 px-5 pb-[0.44rem] font-bold text-white transition-colors duration-200 hover:bg-red-500"
 				>
 					Login
 				</button>

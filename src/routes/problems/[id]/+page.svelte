@@ -3,11 +3,11 @@
 	import type { PageData } from './$types';
 	import { twMerge } from 'tailwind-merge';
 
-	import carta from '$lib/components/markdown/config.js';
 	import Header from '$lib/components/problemHeader/index.svelte';
 
 	let { data }: PageData = $props();
-	const { id, title, description, level } = data;
+	const { carta, problem } = data;
+	const { id, title, description, level } = problem;
 
 	const articleClass = twMerge(
 		'm-10 grow rounded-lg border bg-white shadow',
