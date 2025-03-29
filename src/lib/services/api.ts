@@ -1,18 +1,16 @@
 import axios from 'axios';
 import { type AxiosResponse } from 'axios';
-import { decode } from 'msgpack-lite';
+import { decode } from '@msgpack/msgpack';
 
 import { PUBLIC_API_BASE_URL } from '$env/static/public';
 
 export const instance = axios.create({
 	baseURL: PUBLIC_API_BASE_URL,
-	headers: {
-		Accept: 'application/msgpack'
-	},
+	headers: { Accept: 'application/msgpack' },
 	responseType: 'arraybuffer'
 });
 
-function decodeResponse(response: AxiosResponse) {
+async function decodeResponse(response: AxiosResponse) {
 	if (response.data) {
 		response.data = decode(new Uint8Array(response.data));
 	}
