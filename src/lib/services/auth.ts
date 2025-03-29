@@ -1,3 +1,4 @@
+import { Mutex } from 'async-mutex';
 import { AxiosError } from 'axios';
 import { get } from 'svelte/store';
 import Cookies from 'js-cookie';
@@ -77,9 +78,13 @@ export async function refreshAccessToken() {
 	}
 }
 
-export async function getAccessToken(): Promise<string | undefined> {
-	return (await isAuthorized()) ? get(accessTokenStore) : undefined;
-}
+const mutex = new Mutex();
+
+export const getAccessToken = async () => {
+	return await mutex.runExclusive(async () => {
+		return (await isAuthorized()) ? get(accessTokenStore) : undefined;
+	});
+};
 
 export async function getAuthConfig() {
 	const accessToken = await getAccessToken();

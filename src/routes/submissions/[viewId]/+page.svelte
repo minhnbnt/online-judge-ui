@@ -33,7 +33,7 @@
 <div class="m-10 space-y-5">
 	<div class={twMerge(containerClassName, 'w-fit p-2 px-3')}>
 		<p>Submittor: {owner}</p>
-		<p>Submitted on: {summittedOnParsed.toString()}</p>
+		<p>Submitted on: {summittedOnParsed.toLocaleString()}</p>
 
 		<p>Result: <span class={getResultColorClass()}>{judgeResult}</span></p>
 		<p>Language: {languageSubmitted.name} - {version}</p>

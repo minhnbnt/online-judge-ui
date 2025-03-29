@@ -5,21 +5,14 @@ import { AxiosError } from 'axios';
 
 import { instance } from '$lib/services/api';
 import getCarta from '$lib/components/markdown/config';
+import type { ProblemEntry } from '$lib/types/problems';
 
 export const load: PageLoad = async ({ params }) => {
 	const { id } = params;
 
 	try {
-		const [problems, comments, carta] = await Promise.all([
-			instance.get(`problems/${id}`), //
-			instance.get(`problems/${id}/comments/`),
-			getCarta()
-		]);
-		return {
-			problem: problems.data,
-			comments: comments.data,
-			carta
-		};
+		const [problems, carta] = await Promise.all([instance.get(`problems/${id}`), getCarta()]);
+		return { problem: problems.data as ProblemEntry, carta };
 	} catch (err) {
 		if (!(err instanceof AxiosError)) {
 			throw err;
