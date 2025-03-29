@@ -1,11 +1,12 @@
 <script lang="ts">
 	import debounce from 'debounce';
 	import { Markdown } from 'carta-md';
+	import getCarta from './markdown/config';
 
-	import carta from '$lib/components/markdown/config';
 	import CodeEditor from '$lib/components/codeEditor/index.svelte';
 	import { type ProblemSubmitPayload as Payload } from '$lib/types/problems';
 	import { twMerge } from 'tailwind-merge';
+	import Loading from '$lib/assets/loading.svelte';
 
 	export let initialValue: Payload | undefined = undefined;
 	export let handleSubmit: (payload: Payload) => Promise<void>;
@@ -27,11 +28,13 @@
 
 	let description = initialValue.description || '';
 
-	let displayMarkdown = '';
+	const emptyText = 'Preview will be displayed right here.';
+
+	let displayMarkdown = emptyText;
 
 	let setDisplay = (detail: string | undefined) => {
 		if (!detail?.trim()) {
-			detail = 'Preview will be displayed right here.';
+			detail = emptyText;
 		}
 
 		displayMarkdown = detail;
@@ -55,10 +58,10 @@
 
 	$: setDisplay(description);
 
-	const textAreaClassName = 'rounded border bg-gray-50 p-2 dark:bg-gray-900 dark:border-gray-500';
-	const inputClassName = twMerge('w-full, py-1', textAreaClassName);
-
 	const articleClassName = 'max-w-full rounded-lg p-3 empty:hidden bg-gray-50 dark:bg-gray-900';
+	const textAreaClassName = 'rounded border bg-gray-50 p-2 dark:bg-gray-900 dark:border-gray-500';
+
+	const inputClassName = twMerge('w-full, py-1', textAreaClassName);
 </script>
 
 <div class="grid grid-cols-1 gap-3 md:grid-cols-3">
@@ -97,9 +100,15 @@
 </div>
 
 <article class={twMerge(articleClassName, 'prose dark:prose-invert')}>
-	{#key displayMarkdown}
-		<Markdown {carta} value={displayMarkdown} />
-	{/key}
+	{#await getCarta()}
+		<div class="flex justify-center">
+			<Loading class="size-[30px]" />
+		</div>
+	{:then carta}
+		{#key displayMarkdown}
+			<Markdown {carta} value={displayMarkdown} />
+		{/key}
+	{/await}
 </article>
 
 <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">

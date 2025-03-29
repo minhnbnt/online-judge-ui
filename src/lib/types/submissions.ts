@@ -11,7 +11,7 @@ export interface Submission {
 	problem: { id: string; title: string };
 	language: string;
 	judgeResult: string;
-	summittedOn: Date;
+	submittedOn: Date;
 }
 
 export interface SubmissionDetailed extends Submission {

@@ -4,7 +4,7 @@
 
 	import type { ProblemEntry } from '$lib/types/problems';
 
-	const { problems }: { problems: ProblemEntry[] } = $props();
+	const { problems, class: classname = '' }: { problems: ProblemEntry[]; class: string } = $props();
 
 	const borderColor = 'dark:border-gray-500';
 
@@ -19,7 +19,8 @@
 
 	const wrapper = twMerge(
 		'm-10 max-w-full overflow-hidden rounded-lg border bg-white shadow',
-		borderColor
+		borderColor,
+		classname
 	);
 </script>
 

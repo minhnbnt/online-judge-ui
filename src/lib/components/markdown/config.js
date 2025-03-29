@@ -1,20 +1,30 @@
-import { Carta } from 'carta-md';
-
-import { math } from '@cartamd/plugin-math';
-import { component } from '@cartamd/plugin-component';
-import { svelte, initializeComponents } from '@cartamd/plugin-component/svelte';
-
-import DOMPurify from 'isomorphic-dompurify';
-
-import Pre from './preElement.svelte';
-
 import 'katex/dist/katex.css';
 
-const mapped = [svelte('pre', Pre)];
+async function carta() {
+	const [
+		{ Carta },
+		{ default: DOMPurify },
+		{ math },
+		{ component },
+		{ svelte, initializeComponents },
+		{ default: Pre }
+	] = await Promise.all([
+		import('carta-md'),
+		import('isomorphic-dompurify'),
+		import('@cartamd/plugin-math'),
+		import('@cartamd/plugin-component'),
+		import('@cartamd/plugin-component/svelte'),
+		import('./preElement.svelte')
+	]);
 
-const carta = new Carta({
-	sanitizer: DOMPurify.sanitize,
-	extensions: [math(), component(mapped, initializeComponents)]
-});
+	const mapped = [svelte('pre', Pre)];
+
+	const carta = new Carta({
+		sanitizer: DOMPurify.sanitize,
+		extensions: [math(), component(mapped, initializeComponents)]
+	});
+
+	return carta;
+}
 
 export default carta;

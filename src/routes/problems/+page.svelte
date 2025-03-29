@@ -1,21 +1,21 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { fade } from 'svelte/transition';
+	import { twMerge } from 'tailwind-merge';
 	import { Plus, Icon } from 'svelte-hero-icons';
 
-	import { userInfo } from '$lib/stores/userInfo';
-	import ProblemList from '$lib/components/problemList.svelte';
-
-	import { type ProblemEntry as Problem } from '$lib/types/problems';
 	import fetchPage from '$lib/utils/fetchPage';
+	import { userInfo } from '$lib/stores/userInfo';
 	import Loading from '$lib/assets/loading.svelte';
-	import { twMerge } from 'tailwind-merge';
+	import { type ProblemEntry as Problem } from '$lib/types/problems';
+
+	import Pagination from '$lib/components/pagination.svelte';
+	import ProblemList from '$lib/components/problemList.svelte';
 
 	let { activePage = $bindable() } = $props();
 
 	async function onActiveChange(page: number) {
-		const { results } = await fetchPage('/problems', page);
-		return results as Problem[];
+		return await fetchPage<Problem>('/problems', page);
 	}
 
 	let promise = $derived.by(() => onActiveChange(activePage));
@@ -34,9 +34,13 @@
 	<div class="m-10 flex h-12 justify-center">
 		<Loading class="size-12" />
 	</div>
-{:then problems}
+{:then { results: problems, nPages }}
+	<div class="m-10 flex justify-between space-y-5">
+		<div></div>
+		<Pagination bind:currentPage={activePage} numberOfPages={nPages} class="shadow" />
+	</div>
 	{#if problems.length > 0}
-		<ProblemList {problems} />
+		<ProblemList {problems} class="mt-0" />
 	{/if}
 {/await}
 

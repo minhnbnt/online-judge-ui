@@ -5,9 +5,9 @@
 	import { languages } from '$lib/utils/languages';
 
 	let { data } = $props();
-	const { source, owner, judgeResult, language, version, summittedOn } = data;
+	const { source, owner, judgeResult, language, version, submittedOn } = data;
 
-	const summittedOnParsed = new Date(summittedOn);
+	const summittedOnParsed = new Date(submittedOn);
 	const languageSubmitted = languages.filter(({ compiler }) => language === compiler)[0];
 
 	function getResultColorClass() {

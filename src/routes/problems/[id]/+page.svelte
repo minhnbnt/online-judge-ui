@@ -5,9 +5,11 @@
 
 	import Header from '$lib/components/problemHeader/index.svelte';
 
-	let { data }: PageData = $props();
-	const { carta, problem } = data;
+	const { data }: PageData = $props();
+	const { carta, problem, comments } = data;
 	const { id, title, description, level } = problem;
+
+	console.log(comments);
 
 	const articleClass = twMerge(
 		'm-10 grow rounded-lg border bg-white shadow',

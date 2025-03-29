@@ -1,7 +1,6 @@
 <script>
 	import NotificationContext from '$lib/layouts/notification/index.svelte';
 	import { isDarkmodeEnabled } from '$lib/stores/darkmode';
-	import { twMerge } from 'tailwind-merge';
 
 	import '../app.css';
 
@@ -10,7 +9,7 @@
 	function getRootClassName() {
 		let className = '';
 		if ($isDarkmodeEnabled) {
-			className = twMerge('dark', className);
+			className = 'dark';
 		}
 
 		return className;

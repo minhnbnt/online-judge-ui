@@ -1,10 +1,10 @@
 import { PUBLIC_API_PAGE_SIZE } from '$env/static/public';
 import { instance } from '$lib/services/api';
 
-export default async function fetchPage(url: string, page: number) {
+export default async function fetchPage<T>(url: string, page: number) {
 	type ReturnType = {
 		nPages: number;
-		results: unknown;
+		results: T[];
 	};
 
 	const config = { params: { page } };

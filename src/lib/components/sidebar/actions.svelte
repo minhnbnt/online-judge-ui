@@ -1,4 +1,5 @@
 <script>
+	import { base } from '$app/paths';
 	import { fly } from 'svelte/transition';
 	import { ArrowRightEndOnRectangle, Icon } from 'svelte-hero-icons';
 
@@ -9,8 +10,7 @@
 	import { accessTokenStore, userInfo } from '$lib/stores/userInfo';
 	import { twMerge } from 'tailwind-merge';
 
-	const avatar =
-		'https://cdn-icpc.ptit.edu.vn/ptitcode/profile/zWGiE6M26FtipuZTIafynTqQjarIRoaIrvlY4FqP.png';
+	const avatar = `${base}/minhnbnt.png`;
 
 	let revealAction = $state(false);
 

@@ -5,7 +5,7 @@ export const load: PageLoad = async ({ url }) => {
 
 	let activePage = 1;
 	if (pageParams !== null) {
-		activePage = parseInt(pageParams);
+		activePage = parseInt(pageParams) || 1;
 	}
 
 	return { activePage };

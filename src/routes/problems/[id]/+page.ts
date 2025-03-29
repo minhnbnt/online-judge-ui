@@ -10,13 +10,14 @@ export const load: PageLoad = async ({ params }) => {
 	const { id } = params;
 
 	try {
-		const [response, carta] = await Promise.all([
-			//
-			instance.get(`problems/${id}`),
+		const [problems, comments, carta] = await Promise.all([
+			instance.get(`problems/${id}`), //
+			instance.get(`problems/${id}/comments/`),
 			getCarta()
 		]);
 		return {
-			problem: response.data,
+			problem: problems.data,
+			comments: comments.data,
 			carta
 		};
 	} catch (err) {

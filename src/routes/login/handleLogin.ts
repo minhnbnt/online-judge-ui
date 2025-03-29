@@ -4,6 +4,8 @@ import { AxiosError, type AxiosResponse } from 'axios';
 
 import { instance } from '$lib/services/api';
 import { handleLoggedin } from '$lib/services/auth';
+
+import { getUserInfo } from '$lib/stores/userInfo';
 import { addNotification, clearNotifications } from '$lib/stores/notification';
 
 interface BadRequestResponse {
@@ -12,8 +14,6 @@ interface BadRequestResponse {
 }
 
 function showError(message: string) {
-	clearNotifications();
-
 	addNotification({
 		text: message,
 		position: 'bottom-right',
@@ -23,6 +23,8 @@ function showError(message: string) {
 }
 
 export default async function handleSubmit(event: SubmitEvent, nextUrl: string) {
+	clearNotifications();
+
 	const formData = new FormData(event.target! as HTMLFormElement);
 	const remember = formData.get('remember') || false;
 
@@ -45,7 +47,15 @@ export default async function handleSubmit(event: SubmitEvent, nextUrl: string) 
 		return;
 	}
 
-	await goto(nextUrl);
+	const userInfo = await getUserInfo();
+	const nextUrlIsAdminPage = nextUrl.startsWith('/admin');
+	const isAdminEnterAdminPage = userInfo?.is_staff && nextUrlIsAdminPage;
+
+	if (isAdminEnterAdminPage || !nextUrlIsAdminPage) {
+		await goto(nextUrl);
+	} else {
+		await goto('/problems');
+	}
 }
 
 function onError({ status, data }: AxiosResponse) {
