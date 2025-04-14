@@ -44,7 +44,10 @@
 	"pnpm": {
 		"onlyBuiltDependencies": [
 			"esbuild"
-		]
+		],
+		"overrides": {
+			"cookie@<0.7.0": ">=0.7.0"
+		}
 	},
 	"dependencies": {
 		"@cartamd/plugin-component": "^1.1.0",
