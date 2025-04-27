@@ -1,33 +1,31 @@
-import axios, { type AxiosResponse, type AxiosError } from 'axios';
-import { decode } from '@msgpack/msgpack';
+import axios, { type AxiosRequestHeaders, type AxiosResponseHeaders } from 'axios';
+import { decode, encode } from '@msgpack/msgpack';
 
 import { PUBLIC_API_BASE_URL } from '$env/static/public';
 
-const MSGPACK = 'application/msgpack';
+const MSGPACK_CONTENT_TYPE = 'application/msgpack';
+
+function encodeRequest(data: unknown, headers: AxiosRequestHeaders) {
+	if (!(data instanceof FormData)) {
+		headers['Content-Type'] = MSGPACK_CONTENT_TYPE;
+		data = encode(data);
+	}
+
+	return data;
+}
+
+function decodeResponse(data: ArrayBuffer, headers: AxiosResponseHeaders) {
+	if (headers['content-type'] === MSGPACK_CONTENT_TYPE) {
+		return decode(data);
+	}
+
+	return data;
+}
 
 export const instance = axios.create({
+	headers: { Accept: MSGPACK_CONTENT_TYPE },
+	transformResponse: [decodeResponse],
+	transformRequest: [encodeRequest],
 	baseURL: PUBLIC_API_BASE_URL,
-	headers: { Accept: MSGPACK },
 	responseType: 'arraybuffer'
 });
-
-function decodeResponse(response: AxiosResponse) {
-	const contentType = response.headers['content-type'];
-	const needDecodeResponse = response.data && contentType === MSGPACK;
-
-	if (needDecodeResponse) {
-		response.data = decode(new Uint8Array(response.data));
-	}
-
-	return response;
-}
-
-function onError(error: AxiosError) {
-	if (error.response !== undefined) {
-		error.response = decodeResponse(error.response);
-	}
-
-	return Promise.reject(error);
-}
-
-instance.interceptors.response.use(decodeResponse, onError);
