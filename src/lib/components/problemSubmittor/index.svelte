@@ -97,7 +97,7 @@
 		<label class={fileUploaderButtonClassName} for="file-uploader"> Choose a file. </label>
 		<button class={submitButtonClassName} type="submit" onclick={onSubmit}> Submit </button>
 	</div>
-	<input type="file" onchange={readFile} id="file-uploader" />
+	<input class="hidden" type="file" onchange={readFile} id="file-uploader" />
 
 	{#if showEditor}
 		<div class={editorWrapperClassName} dir="rtl" transition:fly={{ duration: 200, y: -20 }}>
@@ -127,9 +127,3 @@
 		</div>
 	{/if}
 </div>
-
-<style>
-	input[type='file'] {
-		display: none;
-	}
-</style>

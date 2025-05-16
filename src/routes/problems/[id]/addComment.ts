@@ -4,9 +4,21 @@ import { addNotification } from '$lib/stores/notification';
 import { AxiosError } from 'axios';
 
 export default async function addComment(problemId: string, comment: string) {
+	if (comment.length === 0) {
+		addNotification({
+			text: 'Cannot send empty comment.',
+			position: 'bottom-center',
+			removeAfter: 5000,
+			type: 'error'
+		});
+
+		return;
+	}
+
 	if (!(await isAuthorized())) {
 		addNotification({
 			text: 'Please signin to perform this action.',
+			position: 'bottom-center',
 			removeAfter: 5000,
 			type: 'error'
 		});
@@ -15,11 +27,11 @@ export default async function addComment(problemId: string, comment: string) {
 	}
 
 	try {
-		await instance.post(
-			`/problems/${problemId}/comments/`, //
-			{ comment },
-			await getAuthConfig()
-		);
+		await instance.post(`/comments/`, { problem: problemId, comment }, await getAuthConfig());
+
+		if (location !== undefined) {
+			location.reload();
+		}
 	} catch (e) {
 		if (!(e instanceof AxiosError)) {
 			throw e;
@@ -27,9 +39,5 @@ export default async function addComment(problemId: string, comment: string) {
 
 		addNotification({ text: e.message, removeAfter: 5000, type: 'error' });
 		return;
-	}
-
-	if (location !== undefined) {
-		location.reload();
 	}
 }

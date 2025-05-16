@@ -1,10 +1,14 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
+	import type { RatingRow } from '$lib/types/ratingRow';
+	import gotoUserProfile from '$lib/utils/gotoUserProfile';
 	import { twMerge } from 'tailwind-merge';
 
-	import type { ProblemEntry } from '$lib/types/problems';
+	interface Props {
+		ratings: RatingRow[];
+		class?: string;
+	}
 
-	const { problems, class: classname = '' }: { problems: ProblemEntry[]; class: string } = $props();
+	const { ratings, class: classname = '' }: Props = $props();
 
 	const borderColor = 'dark:border-gray-500';
 
@@ -28,20 +32,18 @@
 	<table class="w-full table-fixed bg-white px-10 dark:bg-gray-900 dark:text-white">
 		<thead class="bg-gray-50 font-bold dark:bg-gray-800">
 			<tr>
-				<th class={twMerge(tdClassname, 'w-[50px]')}>No.</th>
-				<th class={twMerge(tdClassname, 'w-[120px]')}>ID</th>
-				<th>Title</th>
-				<th class={twMerge(tdClassname, 'w-[80px]')}>Level</th>
+				<th class={twMerge(tdClassname, 'w-[70px]')}>No.</th>
+				<th>Username</th>
+				<th class={twMerge(tdClassname, 'w-[140px]')}>Number of AC</th>
 			</tr>
 		</thead>
 
 		<tbody>
-			{#each problems as { id, title, level }, index}
-				<tr class={trClassname} onclick={() => goto(`/problems/${id}`)}>
-					<td class={twMerge(tdClassname, 'text-center')}>{index + 1}</td>
-					<td class={twMerge(tdClassname, 'text-center')}>{id}</td>
-					<td> {title} </td>
-					<td class={twMerge(tdClassname, 'text-center')}>{level}</td>
+			{#each ratings as { ranking, username, numberOfAC, userId }}
+				<tr class={trClassname} onclick={() => gotoUserProfile(userId)}>
+					<td class={twMerge(tdClassname, 'text-center')}>{ranking}</td>
+					<td class="pl-5">{username}</td>
+					<td class={twMerge(tdClassname, 'text-center')}>{numberOfAC}</td>
 				</tr>
 			{/each}
 		</tbody>

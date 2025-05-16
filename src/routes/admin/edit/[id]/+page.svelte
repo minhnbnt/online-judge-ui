@@ -5,7 +5,8 @@
 	import { type ProblemSubmitPayload } from '$lib/types/problems';
 	import ProblemEditor from '$lib/components/problemEditor.svelte';
 
-	let { data }: { data: ProblemSubmitPayload } = $props();
+	let { data } = $props();
+	const { id: problemId } = data as ProblemSubmitPayload;
 
 	const wrapperClass = twMerge(
 		'm-10 flex flex-col rounded-lg border bg-white p-[1.25rem] shadow space-y-3',
@@ -15,5 +16,8 @@
 
 <div class={wrapperClass}>
 	<h1 class="mb-5 text-2xl font-bold">Edit Problem</h1>
-	<ProblemEditor initialValue={data} {handleSubmit} />
+	<ProblemEditor
+		initialValue={data}
+		handleSubmit={(editedProblem) => handleSubmit(problemId, editedProblem)}
+	/>
 </div>

@@ -4,7 +4,7 @@ import { instance } from '$lib/services/api';
 import { getAuthConfig, isAuthorized } from '$lib/services/auth';
 import { type ProblemSubmitPayload as Payload } from '$lib/types/problems';
 
-export default async function handleSubmit(payload: Payload) {
+export default async function handleSubmit(problemId: string, payload: Payload) {
 	// TODO: handle on session expired
 	if (!(await isAuthorized())) {
 		return;
@@ -12,7 +12,8 @@ export default async function handleSubmit(payload: Payload) {
 
 	const config = await getAuthConfig();
 	// TODO: handle on bad requests
-	await instance.put('/problems/', payload, config);
+	const response = await instance.put(`/problems/${problemId}/`, payload, config);
+	const newProblemId = response.data.id;
 
-	await goto('/problems');
+	await goto(`/problems/${newProblemId}`);
 }

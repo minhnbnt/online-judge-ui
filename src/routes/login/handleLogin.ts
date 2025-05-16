@@ -28,10 +28,8 @@ export default async function handleSubmit(event: SubmitEvent, nextUrl: string) 
 	const formData = new FormData(event.target! as HTMLFormElement);
 	const remember = formData.get('remember') || false;
 
-	let response;
-
 	try {
-		response = await instance.postForm('/token/', formData);
+		const response = await instance.postForm('/token/', formData);
 		handleLoggedin(response.data, remember as boolean);
 	} catch (err) {
 		if (!(err instanceof AxiosError)) {
@@ -66,11 +64,11 @@ function onError({ status, data }: AxiosResponse) {
 
 	const { username, password } = data as BadRequestResponse;
 
-	if (password) {
-		showError('Password error: ' + password.join('\n'));
-	}
-
 	if (username) {
 		showError('Username error: ' + username.join('\n'));
+	}
+
+	if (password) {
+		showError('Password error: ' + password.join('\n'));
 	}
 }

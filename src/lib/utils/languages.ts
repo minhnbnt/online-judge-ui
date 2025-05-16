@@ -26,6 +26,8 @@ export async function getCompilerVersion(compilerName: string) {
 	const response = await instance.get('/runtimes/');
 	const entries = response.data as Array<LanguageResponse>;
 
+	console.log(entries);
+
 	const target = entries.filter(({ language, aliases }) => {
 		if (language === compilerName) {
 			return true;

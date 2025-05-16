@@ -1,5 +1,5 @@
 export interface ProblemSubmitPayload {
-	id?: string;
+	id: string;
 	title?: string;
 	description?: string;
 	level?: number;

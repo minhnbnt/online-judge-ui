@@ -3,17 +3,19 @@
 	import { twMerge } from 'tailwind-merge';
 
 	interface Props {
-		class: string;
+		class?: string;
 		onSubmit: (comment: string) => void;
-		comments: Comment[];
+		comments?: Comment[];
 	}
 
 	let { onSubmit, comments, class: className = '' }: Props = $props();
 
 	className = twMerge('m-10 space-y-3 rounded-lg border bg-white p-3 shadow', className);
+	if (comments === undefined) {
+		comments = [];
+	}
 
 	let comment = $state('');
-	console.log(comments);
 </script>
 
 <div class={className}>
@@ -27,16 +29,18 @@
 		</button>
 	</section>
 
-	<div class="flex flex-col items-center space-y-3 rounded bg-gray-100 p-3">
-		{#each comments as { user, comment, commentedOn }}
-			{@const commentedDate = new Date(commentedOn)}
-			<section class="flex w-full flex-col">
-				<div class="flex items-center justify-between">
-					<p class="font-bold">{user}</p>
-					<p>{commentedDate.toLocaleString()}</p>
-				</div>
-				<p>{comment}</p>
-			</section>
-		{/each}
-	</div>
+	{#if comments.length > 0}
+		<div class="flex flex-col items-center space-y-3 rounded bg-gray-100 p-3">
+			{#each comments as { user, comment, commentedOn }}
+				{@const commentedDate = new Date(commentedOn)}
+				<section class="flex w-full flex-col">
+					<div class="flex items-center justify-between">
+						<p class="font-bold">{user}</p>
+						<p>{commentedDate.toLocaleString()}</p>
+					</div>
+					<p>{comment}</p>
+				</section>
+			{/each}
+		</div>
+	{/if}
 </div>

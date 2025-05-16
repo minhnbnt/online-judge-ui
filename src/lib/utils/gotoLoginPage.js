@@ -1,9 +1,8 @@
 import { page } from '$app/state';
 import { goto } from '$app/navigation';
 
-import queryString from 'query-string';
-
 export default async function gotoLoginPage() {
+	const { default: queryString } = await import('query-string');
 	const { url } = page;
 
 	const loginUrl = queryString.stringifyUrl({

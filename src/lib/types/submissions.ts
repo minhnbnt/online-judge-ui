@@ -1,3 +1,5 @@
+import type { UserInfoResponse } from './userInfo';
+
 export interface Response {
 	count: number;
 	next?: string;
@@ -7,7 +9,7 @@ export interface Response {
 
 export interface Submission {
 	id: number;
-	owner: string;
+	owner: UserInfoResponse;
 	problem: { id: string; title: string };
 	language: string;
 	judgeResult: string;

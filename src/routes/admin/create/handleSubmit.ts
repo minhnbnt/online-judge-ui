@@ -12,7 +12,8 @@ export default async function handleSubmit(payload: Payload) {
 	const config = await getAuthConfig();
 
 	// TODO: handle on bad requests
-	await instance.post('/problems/', payload, config);
+	const response = await instance.post('/problems/', payload, config);
+	const newProblemId = response.data.id;
 
-	await goto('/problems');
+	await goto(`/problems/${newProblemId}`);
 }

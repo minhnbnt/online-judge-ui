@@ -1,18 +1,25 @@
 import { PUBLIC_API_PAGE_SIZE } from '$env/static/public';
 import { instance } from '$lib/services/api';
 
-export default async function fetchPage<T>(url: string, page: number) {
+const pageSize = parseInt(PUBLIC_API_PAGE_SIZE);
+
+export function getPageParams(pageNumber: number) {
+	return {
+		limit: pageSize,
+		offset: (pageNumber - 1) * pageSize
+	};
+}
+
+export async function fetchPage<T>(url: string, page: number, params: object = {}) {
 	type ReturnType = {
 		nPages: number;
 		results: T[];
 	};
 
-	const config = { params: { page } };
-
-	const response = await instance.get(url, config);
+	params = { ...params, ...getPageParams(page) };
+	const response = await instance.get(url, { params });
 	const { count, results } = response.data;
 
-	const pageSize = parseInt(PUBLIC_API_PAGE_SIZE);
 	const nPages = Math.ceil(count / pageSize);
 
 	return { nPages, results } as ReturnType;

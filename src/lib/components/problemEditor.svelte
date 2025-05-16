@@ -4,15 +4,19 @@
 	import getCarta from './markdown/config';
 
 	import CodeEditor from '$lib/components/codeEditor/index.svelte';
-	import { type ProblemSubmitPayload as Payload } from '$lib/types/problems';
+	import { type ProblemSubmitPayload } from '$lib/types/problems';
 	import { twMerge } from 'tailwind-merge';
 	import Loading from '$lib/assets/loading.svelte';
+
+	type Payload = ProblemSubmitPayload & {
+		id?: string;
+	};
 
 	export let initialValue: Payload | undefined = undefined;
 	export let handleSubmit: (payload: Payload) => Promise<void>;
 
 	if (initialValue === undefined) {
-		initialValue = {};
+		initialValue = {} as Payload;
 	}
 
 	let {

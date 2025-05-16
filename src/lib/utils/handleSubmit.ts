@@ -30,7 +30,6 @@ async function handleSubmit(problem: string, source: string, language: Language 
 		};
 
 		const response = await instance.post('submissions/', payload, config);
-
 		await goto(`/submissions/${response.data.viewId}`);
 	} catch (err) {
 		if (!(err instanceof Error)) {

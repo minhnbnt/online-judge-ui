@@ -1,11 +1,17 @@
 <script lang="ts">
 	import { type Submission } from '$lib/types/submissions';
+	import gotoSubmission from '$lib/utils/gotoSumbission';
 	import { languages } from '$lib/utils/languages';
 	import { userInfo } from '$lib/stores/userInfo';
-	import gotoSubmission from '$lib/utils/gotoSumbission';
 	import { twMerge } from 'tailwind-merge';
+	import gotoUserProfile from '$lib/utils/gotoUserProfile';
 
-	let { submissions }: { submissions: Submission[] } = $props();
+	interface Props {
+		submissions: Submission[];
+		showOwner?: boolean;
+	}
+
+	let { submissions, showOwner = true }: Props = $props();
 
 	const languagesMap = new Map<string, string>();
 	languages.forEach(({ name, compiler }) => {
@@ -44,7 +50,9 @@
 	<thead class="bg-gray-50 font-bold dark:bg-gray-800">
 		<tr>
 			<th class={twMerge(paddingClassName, 'w-[50px]')}>ID</th>
-			<th class={twMerge(paddingClassName, 'w-[150px]')}>Submittor</th>
+			{#if showOwner}
+				<th class={twMerge(paddingClassName, 'w-[150px]')}>Submittor</th>
+			{/if}
 			<th class={twMerge(paddingClassName, 'text-left')}>Problem</th>
 			<th class={twMerge(paddingClassName, 'w-[100px]')}>Language</th>
 			<th class={twMerge(paddingClassName, 'w-[80px]')}>Result</th>
@@ -52,26 +60,29 @@
 	</thead>
 
 	<tbody>
-		{#each submissions as { id, owner, problem, language, judgeResult }}
-			{@const isOwner = $userInfo?.username === owner}
+		{#each submissions as { id, owner: { id: ownerId, username }, problem, language, judgeResult }}
+			{@const isOwner = $userInfo?.id === ownerId}
 			{@const ableToView = $userInfo?.is_staff || isOwner}
 
 			<tr class={ableToView ? tableRowHoverableClassName : tableRowClassName}>
 				<td>{id}</td>
-
-				{#if isOwner}
-					<td class="font-medium">{owner}</td>
-				{:else}
-					<td>{owner}</td>
-				{/if}
-
-				{#if ableToView}
-					<td class="cursor-pointer text-left" onclick={() => gotoSubmission(id)}>
-						{problem.id} - {problem.title}
+				{#if showOwner}
+					<td
+						class={twMerge('cursor-pointer', isOwner && 'font-medium')}
+						onclick={() => gotoUserProfile(ownerId)}
+					>
+						{username}
 					</td>
-				{:else}
-					<td class="text-left">{problem.id} - {problem.title}</td>
 				{/if}
+
+				<td
+					class={twMerge(paddingClassName, ableToView && 'cursor-pointer', 'text-left')}
+					onclick={() => {
+						if (ableToView) gotoSubmission(id);
+					}}
+				>
+					{problem.id} - {problem.title}
+				</td>
 
 				<td>{languagesMap.get(language)}</td>
 				<td class={getResultColorClass(judgeResult)}>{judgeResult}</td>

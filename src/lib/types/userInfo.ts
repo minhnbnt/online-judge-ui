@@ -3,4 +3,5 @@ export interface UserInfoResponse {
 	username: string;
 	email: string;
 	is_staff: boolean;
+	date_joined: string;
 }
