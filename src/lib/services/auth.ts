@@ -44,13 +44,17 @@ export function handleLoggedOut() {
 	accessTokenStore.set(undefined);
 }
 
-export async function isAuthorized(): Promise<boolean> {
-	if (accessTokenIsValid()) {
-		return true;
-	}
+const mutex = new Mutex();
 
-	await refreshAccessToken();
-	return get(accessTokenStore) !== undefined;
+export async function isAuthorized(): Promise<boolean> {
+	return await mutex.runExclusive(async () => {
+		if (accessTokenIsValid()) {
+			return true;
+		}
+
+		await refreshAccessToken();
+		return get(accessTokenStore) !== undefined;
+	});
 }
 
 export async function refreshAccessToken() {
@@ -78,13 +82,9 @@ export async function refreshAccessToken() {
 	}
 }
 
-const mutex = new Mutex();
-
-export const getAccessToken = async () => {
-	return await mutex.runExclusive(async () => {
-		return (await isAuthorized()) ? get(accessTokenStore) : undefined;
-	});
-};
+export async function getAccessToken() {
+	return (await isAuthorized()) ? get(accessTokenStore) : undefined;
+}
 
 export async function getAuthConfig() {
 	const accessToken = await getAccessToken();
