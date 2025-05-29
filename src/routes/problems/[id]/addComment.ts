@@ -27,11 +27,8 @@ export default async function addComment(problemId: string, comment: string) {
 	}
 
 	try {
-		await instance.post(`/comments/`, { problem: problemId, comment }, await getAuthConfig());
-
-		if (location !== undefined) {
-			location.reload();
-		}
+		const config = await getAuthConfig();
+		await instance.post(`/comments/`, { problem: problemId, comment }, config);
 	} catch (e) {
 		if (!(e instanceof AxiosError)) {
 			throw e;

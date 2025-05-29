@@ -12,7 +12,7 @@
 
 	const { data }: PageData = $props();
 	const { carta, problem } = data;
-	const { id, title, description, level } = problem;
+	const { id, title, description, level, numberOfAC, numberOfSubmission } = problem;
 
 	let commentPageNumber = $state(1);
 	let commentPromise = $derived.by(() =>
@@ -29,7 +29,7 @@
 	<title>{`${id} - ${title}`}</title>
 </svelte:head>
 
-<Header {id} {title} {level} />
+<Header {id} {title} {level} {numberOfSubmission} {numberOfAC} />
 
 <div class="m-10 flex flex-col space-y-5">
 	<article class={articleClass}>
@@ -41,7 +41,7 @@
 	{#await commentPromise then { results, nPages }}
 		<Comments
 			class="m-0"
-			onSubmit={(comment: string) => addComment(id, comment)}
+			onSubmit={async (comment: string) => await addComment(id, comment)}
 			comments={results}
 		/>
 

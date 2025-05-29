@@ -103,6 +103,7 @@
 	</div>
 </div>
 
+<!-- Editor -->
 <article class={twMerge(articleClassName, 'prose dark:prose-invert')}>
 	{#await getCarta()}
 		<div class="flex justify-center">
@@ -115,6 +116,7 @@
 	{/await}
 </article>
 
+<!-- Runtime configuration -->
 <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
 	<div class="flex flex-col space-y-1">
 		<label for="stdin"> Stdin: </label>

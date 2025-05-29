@@ -35,8 +35,10 @@
 
 <div class="m-10 space-y-5">
 	<div class={twMerge(containerClassName, 'w-fit')}>
-		<table class="table-fixed px-10 dark:border-gray-500 dark:bg-gray-900 dark:text-white">
-			<tbody class="last:border-none [&>tr]:border-b">
+		<table
+			class="table-fixed overflow-x-hidden px-10 dark:border-gray-500 dark:bg-gray-900 dark:text-white"
+		>
+			<tbody class="last:border-none [&>tr]:border-b [&>tr]:dark:border-gray-500">
 				<tr>
 					<td class={tdClassName}>Submittor</td>
 					<td
