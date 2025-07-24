@@ -2,7 +2,7 @@
 	import NotificationContext from '$lib/layouts/notification/index.svelte';
 	import { isDarkmodeEnabled } from '$lib/stores/darkmode';
 
-	import '../app.css';
+	import '$lib/styles/tailwind.css';
 
 	const { children } = $props();
 
